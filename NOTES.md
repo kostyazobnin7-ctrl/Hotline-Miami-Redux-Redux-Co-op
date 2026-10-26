@@ -162,3 +162,12 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   мыши, reload--, light) — net_skin_draw_self теперь делает это сам (в 1.7–1.8 хост-скин ломал
   перезарядку и прицел).
 - Проверено: казнь клиентом при хосте-Байкере без вылета, нож хоста. Казнь хостом-Байкером — нет.
+
+## v1.8.2 (протокол 17)
+
+- «Trying to draw non-existing sprite» в Draw objPlayerMouse: objMaskMenu KeyPress_13 писал
+  objPlayer.masksprite/maskindex первому экземпляру objPlayer-семейства; игрок хоста оставался со
+  sprPMaskSlip и masksprite = -1. Теперь «var __nmv = <выражение>; with (objPlayer) поле = __nmv;»
+  (значение считается ДО with — внутри with select читался бы у игрока -> вылет, проверено).
+  Плюс в Draw objPlayerMouse и scrDrawMask draw_sprite_ext -> net_draw_sprite_ext (пропуск -1).
+- Байкер: кадр по доле анимации (net_skin_frame), а не mod — удары не обрываются.

@@ -30,7 +30,7 @@ else
 {
     dir = point_direction(x, y, global.mousex, global.mousey);
 }
-var bi = image_index mod max(1, sprite_get_number(bs));
+var bi = net_skin_frame(sprite_index, image_index, bs);
 draw_sprite_ext(sprBikerLegs, legindex, x + 1, y + 1, 1, 1, legdir, c_black, 0.5);
 draw_sprite_ext(sprBikerLegs, legindex, x, y, 1, 1, legdir, c_white, 1);
 draw_sprite_ext(bs, bi, x + 1, y + 1, 1, left, dir, c_black, 0.5);

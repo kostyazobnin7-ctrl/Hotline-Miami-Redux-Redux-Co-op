@@ -198,7 +198,26 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     // хост-Байкер: ПКМ без подбора оружия (после генерации net_c_pickup_special!)
     finalText["gml_Script_scrPlayerPickUp"] = "if (net_host_biker_pick())\n{\n    exit;\n}\n" + Cur("gml_Script_scrPlayerPickUp");
     // хост-Байкер: тело
-    finalText["gml_Object_objPlayerDead_Draw_0"] = "if (global.net_started && net_biker(1))\n{\n    var nbs = net_skin_spr(1, sprite_index);\n    draw_sprite_ext(nbs, image_index mod max(1, sprite_get_number(nbs)), x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);\n    exit;\n}\n" + Cur("gml_Object_objPlayerDead_Draw_0");
+    finalText["gml_Object_objPlayerDead_Draw_0"] = "if (global.net_started && net_biker(1))\n{\n    var nbs = net_skin_spr(1, sprite_index);\n    draw_sprite_ext(nbs, net_skin_frame(sprite_index, image_index, nbs), x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);\n    exit;\n}\n" + Cur("gml_Object_objPlayerDead_Draw_0");
+}
+
+// --- 13. v1.8.2: «Trying to draw non-existing sprite» в Draw objPlayerMouse (босс) ---
+// Меню маски писало objPlayer.masksprite только ПЕРВОМУ экземпляру objPlayer/детей; если первым
+// был не игрок хоста, у него masksprite оставался -1, а спрайт — sprPMaskSlip -> рисовался -1.
+{
+    var cn = "gml_Object_objMaskMenu_KeyPress_13";
+    var t = Cur(cn);
+    int nm = Regex.Matches(t, @"\bobjPlayer\.(masksprite|maskindex) = ").Count;
+    t = Regex.Replace(t, @"\bobjPlayer\.(masksprite|maskindex) = ([^;\n]+);", "var __nmv = $2;\nwith (objPlayer)\n    $1 = __nmv;");
+    finalText[cn] = t;
+    int nd = 0;
+    foreach (var dn in new[] { "gml_Object_objPlayerMouse_Draw_0", "gml_Script_scrDrawMask" })
+    {
+        var d = Cur(dn);
+        nd += Regex.Matches(d, @"\bdraw_sprite_ext\(").Count;
+        finalText[dn] = Regex.Replace(d, @"\bdraw_sprite_ext\(", "net_draw_sprite_ext(");
+    }
+    Console.WriteLine($"  маски: {nm} записей objPlayer.; draw_sprite_ext -> net_draw_sprite_ext: {nd}");
 }
 
 // --- Импорт ---

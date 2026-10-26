@@ -10,7 +10,7 @@ var bspr = net_skin_spr(global.pl_skin[pid], sprite_index);
 var bimg = image_index;
 if (bspr != sprite_index)
 {
-    bimg = image_index mod max(1, sprite_get_number(bspr));
+    bimg = net_skin_frame(sprite_index, image_index, bspr);
 }
 draw_sprite_ext(bspr, bimg, x + 1, y + 1, 1, left, dir, c_black, 0.5);
 draw_sprite_ext(bspr, bimg, x, y, 1, left, dir, c_white, 1);
