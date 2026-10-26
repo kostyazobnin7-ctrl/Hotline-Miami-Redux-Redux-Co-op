@@ -60,3 +60,11 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   pretitle — теперь в FLOW; killx/killy — в HUD (1.4). room_goto(global.*) в игре: level (WORLD),
   nextlevel, interlude, sequence (FLOW).
 - Отладка: Ctrl+F1 — интерлюдия с песней Crystals и переходом в rmApartment1Entrance.
+
+## v1.4.3
+
+- Барьеры за спиной (objHorBarrier 22 комнаты, objVertBarrier 4): в оригинале solid = 1, как только
+  objPlayer по ту сторону. В коопе хост, войдя первым, запирал клиентов снаружи. Step обоих заменён:
+  net_barrier_closed — закрыт, только если все живые игроки (objPlayer/манекен + аватары) по ту сторону
+  и никто не стоит в барьере. Проверено: rmApartment1Entrance, хост первым, клиент прошёл следом.
+- coopdump: --inst <room> <obj,...> — экземпляры в комнате с координатами и creation code.
