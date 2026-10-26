@@ -1,0 +1,13 @@
+var p = argument0;
+var h = global.sb_h[p];
+global.sb_t[p, h] = argument1;
+global.sb_x[p, h] = global.sn_x1[p];
+global.sb_y[p, h] = global.sn_y1[p];
+global.sb_d[p, h] = global.sn_d1[p];
+global.sb_anim[p, h] = global.sn_anim[p];
+global.sb_frame[p, h] = global.sn_frame[p];
+global.sb_ld[p, h] = global.sn_legdir[p];
+global.sb_lf[p, h] = global.sn_legframe[p];
+global.sb_fl[p, h] = global.sn_flags[p];
+global.sb_h[p] = (h + 1) % global.NET_SB;
+global.sb_n[p] = min(global.sb_n[p] + 1, global.NET_SB);

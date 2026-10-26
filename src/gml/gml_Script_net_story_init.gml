@@ -1,0 +1,29 @@
+/// net_story_init()
+// v1.4: сюжет в сети. Хост выполняет нажатия по сюжетным предметам (свои и клиентов) и
+// рассылает события STORY; клиенты повторяют их у себя. Диалоги (scrGetMessage) у клиента
+// появляются только по команде хоста.
+global.st_init = 1;
+global.st_run = 0;      // 1 — событие предмета выполняет net_story_try/net_story_apply (не блокировать)
+global.st_replay = 0;   // 1 — клиент показывает диалог, присланный хостом
+global.st_seq = 0;      // хост: номер последнего события
+global.st_last = 0;     // клиент: номер последнего применённого события
+global.st_sess = -1;    // клиент: сессия, к которой относится st_last
+global.ST_USE = 1;      // предмет: obj, ix, iy, px, py, dir
+global.ST_MSG = 2;      // диалог: номер, obj, x, y
+global.ST_RING = 16;    // хост: столько последних событий хранится
+global.ST_KEEP = 30;    // хост: событие повторяется в пакетах столько тиков (потери UDP)
+global.ST_NEAR = 24;    // предмет учитывается, если до его рамки меньше этого
+for (var k = 0; k < global.ST_RING; k += 1)
+{
+    global.st_r_seq[k] = 0;
+    global.st_r_tick[k] = -1000;
+    global.st_r_room[k] = -1;
+    global.st_r_kind[k] = 0;
+    global.st_r_a[k] = 0;
+    global.st_r_b[k] = 0;
+    global.st_r_c[k] = 0;
+    global.st_r_d[k] = 0;
+    global.st_r_e[k] = 0;
+    global.st_r_f[k] = 0;
+}
+net_story_list();

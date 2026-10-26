@@ -1,0 +1,13 @@
+global.lb_open = 0;
+global.lb_title_off = 0;
+global.lb_auto_done = 0;
+global.lb_field = 0;
+global.lb_val[1] = global.net_name;
+global.lb_val[2] = global.net_host_ip;
+global.lb_val[3] = string(global.net_port);
+global.lb_err = "";
+global.lb_drawing = 0;
+global.lb_click = 0;
+global.lb_mx = 0;
+global.lb_my = 0;
+global.lb_ts = 1;

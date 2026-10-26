@@ -1,0 +1,11 @@
+sprite_index = argument0;
+image_index = 0;
+image_speed = 0;
+body_dir = argument1;
+body_speed = 1 + random(1);
+bled = 0;
+dir = body_dir;
+myxspeed = 0;
+myyspeed = 0;
+legs = 0;
+net_player_down(pid, id);
