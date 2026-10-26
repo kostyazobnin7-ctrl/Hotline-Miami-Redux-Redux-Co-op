@@ -5,9 +5,19 @@ if (legs)
     draw_sprite_ext(sprLegs, legindex, x + 1, y + 1, 1, 1, legdir, c_black, 0.5);
     draw_sprite_ext(sprLegs, legindex, x, y, 1, 1, legdir, c_white, 1);
 }
-draw_sprite_ext(sprite_index, image_index, x + 1, y + 1, 1, left, dir, c_black, 0.5);
-draw_sprite_ext(sprite_index, image_index, x, y, 1, left, dir, c_white, 1);
-net_mask_draw(pid); // v1.4.4: маска игрока (FLOW)
+// v1.7: скин игрока (Джек / Байкер)
+var bspr = net_skin_spr(global.pl_skin[pid], sprite_index);
+var bimg = image_index;
+if (bspr != sprite_index)
+{
+    bimg = image_index mod max(1, sprite_get_number(bspr));
+}
+draw_sprite_ext(bspr, bimg, x + 1, y + 1, 1, left, dir, c_black, 0.5);
+draw_sprite_ext(bspr, bimg, x, y, 1, left, dir, c_white, 1);
+if (global.pl_skin[pid] != 1)
+{
+    net_mask_draw(pid); // v1.4.4: маска игрока (FLOW); у Байкера — шлем, маску не рисуем
+}
 var w = global.pw_wpn[pid];
 if (sprite_index == sprPWalkThrow && w != global.NET_WPN_NONE && w >= 30)
 {

@@ -56,7 +56,20 @@ if (global.net_mode == global.NET_MODE_HOST)
     net_spec_state_update();
     if (global.net_debug)
     {
-        if (keyboard_check_pressed(vk_f6))
+        if (keyboard_check_pressed(vk_f6) && keyboard_check(vk_control))
+        {
+            // v1.7: зачистка этажа (проверка конца уровня при мёртвом хосте)
+            with (objEnemy)
+            {
+                instance_destroy();
+            }
+            with (objKnockedOut)
+            {
+                instance_destroy();
+            }
+            net_log("debug: враги удалены");
+        }
+        else if (keyboard_check_pressed(vk_f6))
         {
             net_debug_shoot(208, 2);
         }

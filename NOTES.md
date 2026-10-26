@@ -113,3 +113,24 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
 - Проверено на стенде: буква клиентом (у обоих), PROG («открыто от хоста 1, сохранено»), хост
   мёртв -> пауза -> остался мёртвым, аватар клиента на месте; выбор маски у хоста после перезапуска.
   NPC в домашних сценах вживую не проверялись.
+
+## v1.7 (протокол 14)
+
+- CLEAN HIT: objJanitorVacuum Step обращался к objPWalkWindow.active, а зона срабатывала и от
+  других игроков. В зонах «objPWalkWindow|objPlayerMouse|objPlayerBikerHouse.поле = ...» -> with (...).
+- Shift: cam_follow клиента — с Shift цель камеры смещается к курсору (как aimfar у objPlayerMouse).
+- Переход группы: проверка «хост выбирает маску» больше не выходит из цикла — аватары взводятся
+  (pt_armed), ждёт только сам переход. Проверено: P2 в двери во время меню -> после маски ушли.
+- Боссы: objBoss2 (Байкер) — state 1000 только если живых нет (net_any_alive), без цели — exit;
+  objBoss2Pry: with (objPlayer) -> with (net_tgt()); objBoss2Crawl: добивает только хост
+  (net_tgt_is_host); objPClubBoss2 -> net_boss_drop_club (оружие 2 на полу). objPanther: укус
+  аватара -> net_panther_bite (net_enemy_melee_hit(1)), пантера остаётся. Вживую не проверено.
+- Скин Байкера: net_skin_my (лобби), MASK(26) +байт скина, LOOK(28) хост -> всем (скины, настройка
+  масок, save_ok). Аватар: net_skin_spr (sprPAttack* -> sprBoss2AttackCleaver, sprPWalkUnarmed ->
+  sprBoss2Walk, sprPWalk* -> sprBoss2WalkCleaver), маска не рисуется. Хост: objPlayerMouse Draw ->
+  net_skin_draw_self.
+- Сохранение: SAVE(29) — saves.dat хоста строками; клиент копирует своё в saves_before_coop.dat,
+  пишет, scrLoadUnlocked, SAVE_ACK(30). net_host_can_start ждёт pl_save_ok. Полоса — net_save_bar_draw.
+- MASK PICK ON RESTART (хост, лобби, LOOK): OFF — net_mask_restart_reset держит маску (maskload),
+  net_mask_pick_step не открывает меню. Проверено ON и OFF.
+- Отладка: Ctrl+F6 — удалить врагов этажа. win.ps1: -Ctrl, -AimX/-AimY вместе с -Key.

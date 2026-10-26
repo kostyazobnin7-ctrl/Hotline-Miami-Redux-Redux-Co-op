@@ -7,6 +7,8 @@ if (args[1] == "--info") { var g = data.GeneralInfo; Console.WriteLine(g.Name.Co
 if (args[1] == "--rooms") { foreach (var on in args[2].Split(',')) { var rs = data.Rooms.Where(r => r.GameObjects.Any(g => g.ObjectDefinition?.Name.Content == on)).Select(r => r.Name.Content + "x" + r.GameObjects.Count(g => g.ObjectDefinition?.Name.Content == on)); Console.WriteLine(on + ": " + string.Join(" ", rs)); } return; }
 if (args[1] == "--objidx") { foreach (var on in args[2].Split(',')) Console.WriteLine(on + " " + data.GameObjects.IndexOf(data.GameObjects.ByName(on))); return; }
 if (args[1] == "--inst") { var r = data.Rooms.ByName(args[2]); foreach (var g in r.GameObjects.Where(g => args[3].Split(',').Contains(g.ObjectDefinition?.Name.Content))) Console.WriteLine(g.ObjectDefinition.Name.Content + " @" + g.X + "," + g.Y + " sx" + g.ScaleX + " sy" + g.ScaleY + " cc:" + (g.CreationCode?.Name.Content ?? "-")); return; }
+if (args[1] == "--spridx") { foreach (var on in args[2].Split(',')) { var sp = data.Sprites.ByName(on); Console.WriteLine(on + " " + (sp == null ? -1 : data.Sprites.IndexOf(sp)) + (sp == null ? "" : " frames " + sp.Textures.Count)); } return; }
+if (args[1] == "--sprlike") { foreach (var sp in data.Sprites) if (sp.Name.Content.Contains(args[2])) Console.WriteLine(data.Sprites.IndexOf(sp) + " " + sp.Name.Content + " f" + sp.Textures.Count); return; }
 GameSpecificResolver.BaseDirectory = utmt + Path.DirectorySeparatorChar;
 GameSpecificResolver.ReloadDefinitions(); GameSpecificResolver.Initialize(data);
 var ctx = new GlobalDecompileContext(data);

@@ -19,3 +19,7 @@ if (global.pl_mask[pid] != mk || global.pl_mskin[pid] != sk)
 }
 global.pl_mask[pid] = mk;
 global.pl_mskin[pid] = sk;
+if (argument1 >= 4)
+{
+    global.pl_skin[pid] = buffer_read(argument0, buffer_u8);
+}

@@ -1,4 +1,4 @@
-global.NET_PROTO = 13;
+global.NET_PROTO = 14;
 global.NET_MAX_PLAYERS = 4;
 global.NET_PORT_TRIES = 8;
 global.NET_PING_INTERVAL_MS = 1000;
@@ -32,6 +32,10 @@ global.NET_MSG_PROPS = 24;
 global.NET_MSG_FLOW = 25;
 global.NET_MSG_MASK = 26;
 global.NET_MSG_PROG = 27;
+// v1.7: лобби — скины и настройки (LOOK), передача сохранения (SAVE, SAVE_ACK)
+global.NET_MSG_LOOK = 28;
+global.NET_MSG_SAVE = 29;
+global.NET_MSG_SAVE_ACK = 30;
 global.NET_DOORS_MAX = 150;
 global.NET_TGT_NONE_DIST = 4000;
 global.NET_RESTART_INPLACE_MS = 5000;

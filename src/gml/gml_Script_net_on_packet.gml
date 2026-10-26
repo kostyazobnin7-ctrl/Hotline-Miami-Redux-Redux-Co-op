@@ -137,6 +137,18 @@ else if (typ == global.NET_MSG_PROG)
 {
     net_on_prog(b, sz, ip, port);
 }
+else if (typ == global.NET_MSG_LOOK)
+{
+    net_on_look(b, sz, ip, port);
+}
+else if (typ == global.NET_MSG_SAVE)
+{
+    net_on_save(b, sz, ip, port);
+}
+else if (typ == global.NET_MSG_SAVE_ACK)
+{
+    net_on_save_ack(b, sz, ip, port);
+}
 else
 {
     global.net_drops += 1;

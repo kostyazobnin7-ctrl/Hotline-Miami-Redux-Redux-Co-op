@@ -11,11 +11,9 @@ if (instance_exists(objEffector))
         exit;
     }
 }
-// v1.4.4: хост ещё выбирает маску — переход отложить (иначе игра возвращала его назад)
-if (p != -4 && net_mask_menu_open())
-{
-    exit;
-}
+// v1.4.4: хост ещё выбирает маску — переход отложить (иначе игра возвращала его назад).
+// v1.7: цикл всё равно идёт, чтобы «взвести» аватары (pt_armed), — ждёт только сам переход.
+var menu_wait = (p != -4 && net_mask_menu_open());
 for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
 {
     var a = global.av[i];
@@ -50,7 +48,7 @@ for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
         if (t == -4)
         {
         }
-        else
+        else if (!menu_wait)
         {
             if (p == -4)
             {

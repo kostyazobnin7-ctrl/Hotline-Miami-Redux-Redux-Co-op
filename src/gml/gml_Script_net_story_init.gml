@@ -46,7 +46,19 @@ global.ST_LC = 3;      // надпись «CHAPTER CLEAR» (objLevelComplete): x
 global.st_lc_allow = 0;
 global.ST_PICK = 4;     // v1.6: особый подбор (маска с пола и т. п.): d, e = x, y; f = dir
 global.ST_NEAR_CL = 48; // v1.6: радиус сюжетного предмета для клиентов
-global.prog_sess = -1;  // v1.6: сессия, для которой запомнен прогресс хоста
+global.prog_sess = -1;
+// v1.7: скины (0 Джек, 1 Байкер), настройка «выбор маски при перезапуске», передача сохранения
+global.net_skin_my = 0;
+global.net_opt_masks = 1;
+global.lx_t = 0;
+global.sv_state = 0;    // клиент: 0 ждём, 1 получаем, 2 применено
+global.sv_done_t = 0;
+for (var sk = 0; sk <= global.NET_MAX_PLAYERS; sk += 1)
+{
+    global.pl_skin[sk] = 0;
+    global.pl_save_ok[sk] = 0;
+    global.sv_sent_t[sk] = 0;
+}  // v1.6: сессия, для которой запомнен прогресс хоста
 for (var pk = 0; pk < 256; pk += 1)
 {
     global.prog_base[pk] = 1;

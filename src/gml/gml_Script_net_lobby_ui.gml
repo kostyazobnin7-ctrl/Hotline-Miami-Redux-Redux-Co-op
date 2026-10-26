@@ -147,6 +147,15 @@ else
                 {
                     s += "  (YOU)";
                 }
+                // v1.7: скин и передача сохранения
+                if (global.pl_skin[i] == 1)
+                {
+                    s += "  [BIKER]";
+                }
+                if (i >= 2 && !global.pl_save_ok[i])
+                {
+                    s += "  (save...)";
+                }
                 net_ui_text(px + (120 * u), ry + (bh / 2), s, 16777215, 0, 1);
                 if (global.pl_host[i])
                 {
@@ -223,7 +232,32 @@ else
     }
     if (d && global.net_mode == global.NET_MODE_HOST && !global.net_started && !net_host_can_start())
     {
-        net_ui_text(gw / 2, ry + (rh * 1.2), "waiting for all players to be READY", 8421504, 1, 0.8);
+        net_ui_text(gw / 2, ry + (rh * 1.2), "waiting for all players to be READY and get the save", 8421504, 1, 0.8);
+    }
+    // v1.7: скин (все) и настройка выбора маски при перезапуске (хост)
+    ry += (rh * 2);
+    var sks = "SKIN: JACKET";
+    if (global.net_skin_my == 1)
+    {
+        sks = "SKIN: BIKER";
+    }
+    if (net_ui_button(px, ry, px + bw, ry + bh, sks, 1))
+    {
+        global.net_skin_my = !global.net_skin_my;
+    }
+    var mos = "MASK PICK ON RESTART: ON";
+    if (!global.net_opt_masks)
+    {
+        mos = "MASK PICK ON RESTART: OFF";
+    }
+    if (net_ui_button((px + pw) - (bw * 1.9), ry, px + pw, ry + bh, mos, global.net_mode == global.NET_MODE_HOST))
+    {
+        global.net_opt_masks = !global.net_opt_masks;
+    }
+    // v1.7: клиент — полоса передачи сохранения хоста
+    if (d && global.net_mode == global.NET_MODE_CLIENT && me > 0)
+    {
+        net_save_bar_draw(px, ry + (rh * 1.4), pw, bh * 0.5, u);
     }
 }
 if (d)
