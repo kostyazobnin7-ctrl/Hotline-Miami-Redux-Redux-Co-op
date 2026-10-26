@@ -26,4 +26,6 @@ for (var k = 0; k < global.ST_RING; k += 1)
     global.st_r_e[k] = 0;
     global.st_r_f[k] = 0;
 }
+global.net_flow_room = -1; // хост: комната последней отправки FLOW
+global.net_flow_have = 0; // клиент: получен ли FLOW от хоста
 net_story_list();

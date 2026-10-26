@@ -90,7 +90,16 @@ if (global.net_mode == global.NET_MODE_HOST)
         {
             net_debug_knockout(2);
         }
-        if (keyboard_check_pressed(vk_f1) && keyboard_check(vk_shift))
+        if (keyboard_check_pressed(vk_f1) && keyboard_check(vk_control))
+        {
+            // v1.4.2: интерлюдия как после машины в доме (песня, revisit, следующая комната)
+            global.song = global.Crystals;
+            global.revisit = 1;
+            global.interlude = rmApartment1Entrance;
+            net_log("debug: rmInterlude -> rmApartment1Entrance");
+            room_goto(rmInterlude);
+        }
+        else if (keyboard_check_pressed(vk_f1) && keyboard_check(vk_shift))
         {
             var a2 = global.av[2];
             if (a2 != -4 && instance_exists(a2))
@@ -164,6 +173,10 @@ if (global.net_mode == global.NET_MODE_HOST)
     if ((global.net_tick % 15) == 7)
     {
         net_props_send();
+    }
+    if ((global.net_tick % 30) == 11 || room != global.net_flow_room)
+    {
+        net_flow_send();
     }
     net_party_travel();
     if ((global.net_tick % global.NET_ENTS_EVERY) == 2)

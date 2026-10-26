@@ -48,3 +48,15 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   без dir/active. net_story_try берёт только object_index == objPlayer и выходит, если рядом нет предметов.
 - Лобби: кнопка PASTE IP (CTRL+V), Ctrl+V в поле (IP/порт — замена целиком), Ctrl+C копирует поле.
 - Отладка: Ctrl+F10 — оружие под P3. На стенде из 3 игроков P3 поднимает оружие нормально.
+
+## v1.4.2
+
+- Вылет клиента в rmInterlude: global.song у клиента 0 (net_globals_default), а string_length ждёт строку.
+  Пакет FLOW (25), раз в 30 тиков и при смене комнаты: song (без working_directory), interlude, revisit,
+  nextlevel, sequence, title, pretitle. objInterlude: is_string-проверка, клиент уходит в
+  global.interlude только после FLOW (иначе 0 = первая комната игры).
+- Проверка уязвимостей того же рода: из 416 нулевых умолчаний net_globals_default опасны те, что игра
+  задаёт только по пути хоста (машина, выбор главы): song/interlude/revisit/nextlevel/sequence/title/
+  pretitle — теперь в FLOW; killx/killy — в HUD (1.4). room_goto(global.*) в игре: level (WORLD),
+  nextlevel, interlude, sequence (FLOW).
+- Отладка: Ctrl+F1 — интерлюдия с песней Crystals и переходом в rmApartment1Entrance.

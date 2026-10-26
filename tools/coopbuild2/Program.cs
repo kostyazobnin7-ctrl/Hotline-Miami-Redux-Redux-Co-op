@@ -84,6 +84,18 @@ foreach (var o in zoneObjs)
 // --- 4. Диалоги: хост рассылает номер сообщения, клиент показывает только присланные ---
 finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" + Cur("gml_Script_scrGetMessage");
 
+// --- 5. Интерлюдия (v1.4.2): global.song у клиента может быть ещё не строкой, а переход —
+// только после FLOW от хоста (иначе global.interlude = 0, т. е. первая комната игры) ---
+{
+    var cn = "gml_Object_objInterlude_Draw_0";
+    var t = Cur(cn);
+    int n0 = t.Length;
+    t = t.Replace("string_length(global.song) > 0", "is_string(global.song) && string_length(global.song) > 0");
+    t = t.Replace("room_goto(global.interlude);", "if (!net_is_client() || global.net_flow_have)\n        room_goto(global.interlude);");
+    if (t.Length == n0) throw new Exception("objInterlude: правка не применилась");
+    finalText[cn] = t;
+}
+
 // --- Импорт ---
 var group = new UndertaleModLib.Compiler.CodeImportGroup(data);
 foreach (var kv in finalText) group.QueueReplace(kv.Key, kv.Value);
