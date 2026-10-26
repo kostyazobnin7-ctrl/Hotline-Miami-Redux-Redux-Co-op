@@ -96,6 +96,40 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     finalText[cn] = t;
 }
 
+// --- 6. v1.4.4: «CHAPTER CLEAR» у клиента только по команде хоста ---
+{
+    var cn = "gml_Object_objLevelComplete_Create_0";
+    finalText[cn] = "if (net_lc_hook())\n{\n    instance_destroy();\n    exit;\n}\n" + Cur(cn);
+}
+
+// --- 7. v1.4.4: при перезапуске хост в сети не выбирает маску заново ---
+foreach (var cn in new[] { "gml_Object_objEffector_Step_0", "gml_Object_objEffectorHouse_Draw_0" })
+{
+    var t = Cur(cn);
+    int n = Regex.Matches(t, @"global\.maskonsaved = 0;").Count;
+    if (n == 0) throw new Exception(cn + ": нет maskonsaved = 0");
+    finalText[cn] = t.Replace("global.maskonsaved = 0;", "net_mask_restart_reset();");
+    Console.WriteLine($"  {cn}: maskonsaved x{n}");
+}
+
+// --- 8. v1.4.4: global.done = 1 у клиента не ставится (решает хост) ---
+{
+    int files = 0, refs = 0;
+    foreach (var c in data.Code)
+    {
+        if (c.ParentEntry != null) continue;
+        var cn = c.Name.Content;
+        if (cn.StartsWith("gml_Script_net_") || cn.StartsWith("gml_Object_objCoop")) continue;
+        string t;
+        try { t = Cur(cn); } catch { continue; }
+        int n = Regex.Matches(t, @"global\.done = 1;").Count;
+        if (n == 0) continue;
+        finalText[cn] = t.Replace("global.done = 1;", "net_done_set();");
+        files++; refs += n;
+    }
+    Console.WriteLine($"  global.done = 1 -> net_done_set: {files} фрагментов, {refs} мест");
+}
+
 // --- Импорт ---
 var group = new UndertaleModLib.Compiler.CodeImportGroup(data);
 foreach (var kv in finalText) group.QueueReplace(kv.Key, kv.Value);

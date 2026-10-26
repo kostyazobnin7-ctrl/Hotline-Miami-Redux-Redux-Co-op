@@ -59,6 +59,17 @@ if (kind == global.ST_USE)
     }
     net_log("сюжет: повтор " + object_get_name(ob));
 }
+else if (kind == global.ST_LC)
+{
+    // v1.4.4: надпись конца уровня — только по команде хоста, одна
+    if (!instance_exists(objLevelComplete))
+    {
+        global.st_lc_allow = 1;
+        instance_create(argument1, argument2, objLevelComplete);
+        global.st_lc_allow = 0;
+        net_log("сюжет: CHAPTER CLEAR");
+    }
+}
 else if (kind == global.ST_MSG)
 {
     var ctx = noone;

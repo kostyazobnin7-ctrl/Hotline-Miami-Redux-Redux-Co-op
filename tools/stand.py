@@ -15,7 +15,17 @@ EXE_NAME = "Hotline Miami Redux Redux.exe"
 PIDS = WORK / "run" / "pids.json"
 
 
+def kill_strays():
+    # копии игры из work/instances, оставшиеся от прошлых запусков (иначе порт 47800 занят)
+    inst = str(WORK / "instances")
+    subprocess.call(["powershell", "-NoProfile", "-Command",
+                     "Get-Process 'Hotline Miami Redux Redux' -ErrorAction SilentlyContinue | "
+                     "Where-Object { $_.Path -like '" + inst + "\*' } | Stop-Process -Force"])
+
+
 def run(clients, lag, jitter, debug):
+    kill_strays()
+    time.sleep(1.0)
     flags = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
     procs = []
     for i in range(1, clients + 2):
@@ -46,6 +56,7 @@ def stop():
         if EXE_NAME in out:
             subprocess.call(["taskkill", "/PID", str(p["pid"]), "/F"])
     PIDS.unlink()
+    kill_strays()
 
 
 def main():

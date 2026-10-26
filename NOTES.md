@@ -68,3 +68,26 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   net_barrier_closed — закрыт, только если все живые игроки (objPlayer/манекен + аватары) по ту сторону
   и никто не стоит в барьере. Проверено: rmApartment1Entrance, хост первым, клиент прошёл следом.
 - coopdump: --inst <room> <obj,...> — экземпляры в комнате с координатами и creation code.
+
+## v1.5 (протокол 12)
+
+- Смерть хоста: net_player_inst(1) = -4, и net_party_travel выходил — клиенты не могли сменить этаж.
+  Проходы (objTransitioner Collision_98 и др.) срабатывают только от objPlayerMouse и т. п., не от
+  манекена objPlayer. Теперь клиент-ведущий поднимает хоста (DEAD -> DOWNED -> net_player_revive)
+  и уводит группу; в новой комнате все и так живы (net_room_start). Проверено: rmApartment1Entrance.
+  Внимание: на вокзале проходы закрыты (solid), пока виден поезд или есть враги, — это игра.
+- net_story_try / хост ПКМ: настоящий игрок — objPlayerMouse и т. п. (net_player_has_vars), а не
+  objPlayer (в 1.4.1 хост перестал брать предметы).
+- Музыка: sxeasy_play / sxeasy_stop (скрипты игры) начинаются с net_music_hook. Хост хранит состояние
+  (net_mus_seq, on, путь без working_directory) и шлёт FLOW сразу; клиент свои вызовы игнорирует и
+  включает присланное. Проверено: Crystals в rmChapter, Static на CHAPTER CLEAR.
+- Маски: клиент после перезапуска (net_on_level_restart -> net_mask_pick) получает objMaskMenu,
+  ввод заморожен (net_mask_menu_open). Подтверждение — пакет MASK (26) раз в секунду; маски всех —
+  в FLOW (u8 маска 255 = нет, u8 скин 0 ""/1 Skin/2 Hard); аватар рисует sprMasks* (net_mask_draw).
+  Хост: global.maskonsaved = 0 в objEffector Step / objEffectorHouse Draw -> net_mask_restart_reset
+  (в сети хост держит маску через maskload). Переход группы не начинается, пока у хоста открыто меню.
+- CHAPTER CLEAR у клиента: scrCheckMissionComplete у клиента видел 0 врагов (выключены), ставил
+  done = 1 и создавал objLevelComplete; WORLD сбрасывал done — повтор. Все «global.done = 1;» в коде
+  игры (48 фрагментов, 151 место) -> net_done_set() (у клиента ничего). objLevelComplete Create ->
+  net_lc_hook: у клиента только по STORY kind 3 (LC) от хоста.
+- Отладка: Ctrl+F3 — objLevelComplete у хоста. stand.py убивает оставшиеся копии из instances.

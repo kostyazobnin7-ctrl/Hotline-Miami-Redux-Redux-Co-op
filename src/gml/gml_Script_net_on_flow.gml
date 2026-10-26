@@ -37,4 +37,37 @@ if ((buffer_tell(b) + 4) <= argument1)
     global.title = buffer_read(b, buffer_string);
     global.pretitle = buffer_read(b, buffer_string);
 }
+// v1.4.4: музыка и маски
+if ((buffer_tell(b) + 4) <= argument1)
+{
+    var mseq = buffer_read(b, buffer_u16);
+    var mon = buffer_read(b, buffer_u8);
+    var mpath = buffer_read(b, buffer_string);
+    if (mseq != global.net_mus_seen)
+    {
+        global.net_mus_seen = mseq;
+        global.net_mus_replay = 1;
+        if (mon && mpath != "")
+        {
+            net_log("музыка: " + mpath);
+            sxeasy_play(working_directory + mpath);
+        }
+        else
+        {
+            net_log("музыка: стоп");
+            sxeasy_stop(1);
+        }
+        global.net_mus_replay = 0;
+    }
+    for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 2) <= argument1; i += 1)
+    {
+        var mk = buffer_read(b, buffer_u8);
+        var sk = buffer_read(b, buffer_u8);
+        if (i != global.net_my_pid || global.pl_mask[i] == 255)
+        {
+            global.pl_mask[i] = mk;
+            global.pl_mskin[i] = sk;
+        }
+    }
+}
 global.net_flow_have = 1;

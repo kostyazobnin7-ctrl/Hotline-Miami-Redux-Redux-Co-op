@@ -129,6 +129,10 @@ else if (typ == global.NET_MSG_FLOW)
 {
     net_on_flow(b, sz, ip, port);
 }
+else if (typ == global.NET_MSG_MASK)
+{
+    net_on_mask(b, sz, ip, port);
+}
 else
 {
     global.net_drops += 1;

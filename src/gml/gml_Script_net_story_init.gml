@@ -26,6 +26,22 @@ for (var k = 0; k < global.ST_RING; k += 1)
     global.st_r_e[k] = 0;
     global.st_r_f[k] = 0;
 }
-global.net_flow_room = -1; // хост: комната последней отправки FLOW
+global.net_flow_room = -1;
+// v1.4.4: музыка (хост — состояние, клиент — что уже включил)
+global.net_mus_seq = 0;
+global.net_mus_on = 0;
+global.net_mus_path = "";
+global.net_mus_seen = -1;
+global.net_mus_replay = 0;
+// v1.4.4: маски игроков (255 — нет), выбор маски у клиента
+for (var mi = 0; mi <= global.NET_MAX_PLAYERS; mi += 1)
+{
+    global.pl_mask[mi] = 255;
+    global.pl_mskin[mi] = 0;
+}
+global.net_mask_pick = 0;
+global.net_mask_menu_was = 0;
+global.ST_LC = 3;      // надпись «CHAPTER CLEAR» (objLevelComplete): x, y
+global.st_lc_allow = 0; // хост: комната последней отправки FLOW
 global.net_flow_have = 0; // клиент: получен ли FLOW от хоста
 net_story_list();

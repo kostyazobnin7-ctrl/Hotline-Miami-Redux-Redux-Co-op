@@ -7,19 +7,20 @@ var px = argument0;
 var py = argument1;
 var pdir = argument2;
 var own = (argument3 == 1);
-// Только настоящий objPlayer: при ударах/казнях его место занимают дочерние объекты
-// (objEnemyBash...), у которых нет dir/active — тогда предметы не трогаем.
-var p = noone;
-with (objPlayer)
-{
-    if (object_index == objPlayer)
-    {
-        p = id;
-    }
-}
-if (p == noone)
+// Игрок хоста (objPlayerMouse и т. п.); при ударах/казнях его место занимают объекты
+// без dir/active (objEnemyBash...) — тогда предметы не трогаем. Хост убит — манекен.
+var p = net_player_inst(1);
+if (p != -4 && !net_player_has_vars(p.object_index))
 {
     return 0;
+}
+if (p == -4)
+{
+    if (own || global.net_dummy == -4 || !instance_exists(global.net_dummy))
+    {
+        return 0;
+    }
+    p = global.net_dummy;
 }
 var lst = ds_list_create();
 for (var k = 0; k < global.st_nobj; k += 1)

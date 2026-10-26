@@ -82,7 +82,13 @@ if (global.net_mode == global.NET_MODE_HOST)
                 net_debug_spawn_enemy(2, 1);
             }
         }
-        if (keyboard_check_pressed(vk_f3) && keyboard_check(vk_shift))
+        if (keyboard_check_pressed(vk_f3) && keyboard_check(vk_control))
+        {
+            // v1.4.4: надпись конца уровня у хоста (у клиента должна появиться одна)
+            instance_create(0, 0, objLevelComplete);
+            net_log("debug: objLevelComplete");
+        }
+        else if (keyboard_check_pressed(vk_f3) && keyboard_check(vk_shift))
         {
             net_debug_move_p2(99);
         }
@@ -163,8 +169,8 @@ if (global.net_mode == global.NET_MODE_HOST)
     if ((mouse_check_button_pressed(mb_right) || mouse_check_button_pressed(mb_left)) && global.ps_state[1] == global.NET_PS_ALIVE && instance_exists(objPlayer))
     {
         // objPlayer может быть «наследником» (objEnemyBash и т. п. при ударах) — у него нет dir/active
-        var hp = instance_find(objPlayer, 0);
-        if (hp.object_index == objPlayer)
+        var hp = net_player_inst(1);
+        if (hp != -4 && net_player_has_vars(hp.object_index))
         {
             net_story_try(hp.x, hp.y, hp.dir, 1);
         }
@@ -214,6 +220,7 @@ else
     if (!global.net_restarting)
     {
         net_client_dummy();
+        net_mask_client_step(); // v1.4.4: выбор маски клиента
     }
     else
     {
