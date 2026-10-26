@@ -241,7 +241,7 @@ else
     {
         sks = "SKIN: BIKER";
     }
-    if (net_ui_button(px, ry, px + bw, ry + bh, sks, 1))
+    if (net_ui_button(px, ry, px + bw, ry + bh, sks, global.net_mode == global.NET_MODE_CLIENT && !global.net_started))
     {
         global.net_skin_my = !global.net_skin_my;
     }

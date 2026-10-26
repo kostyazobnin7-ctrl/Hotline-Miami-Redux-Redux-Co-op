@@ -58,6 +58,7 @@ for (var sk = 0; sk <= global.NET_MAX_PLAYERS; sk += 1)
     global.pl_skin[sk] = 0;
     global.pl_save_ok[sk] = 0;
     global.sv_sent_t[sk] = 0;
+    global.pk_knives[sk] = 3; // v1.8: ножи Байкера
 }  // v1.6: сессия, для которой запомнен прогресс хоста
 for (var pk = 0; pk < 256; pk += 1)
 {

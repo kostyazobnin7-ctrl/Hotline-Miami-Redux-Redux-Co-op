@@ -134,3 +134,19 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
 - MASK PICK ON RESTART (хост, лобби, LOOK): OFF — net_mask_restart_reset держит маску (maskload),
   net_mask_pick_step не открывает меню. Проверено ON и OFF.
 - Отладка: Ctrl+F6 — удалить врагов этажа. win.ps1: -Ctrl, -AimX/-AimY вместе с -Key.
+
+## v1.8 (протокол 15)
+
+- Байкер (pl_skin = 1) — только клиенты; хост всегда Джек (net_skin_my = 0 у хоста, кнопка SKIN у
+  хоста выключена): заменить objPlayerMouse хоста на objPlayerBiker ломает сюжетный код.
+- Механика (хост, net_wpn_update): у Байкера pw_wpn = 18 (мачете ~ тесак, одним ударом), подбор
+  оружия выключен; ПКМ — особые подборы/сюжет, иначе net_biker_throw: objThrowingKnife как
+  objPlayerBiker Mouse_51, pk_knives (3, хард 1) сбрасывается в net_room_start. LOOK(28) +ножи.
+- Вид: net_skin_spr — sprPAttack* -> sprBoss2AttackCleaver, sprPWalk* -> sprBoss2WalkCleaver,
+  sprPBack*/sprPFront* -> sprMCBack*/sprMCFront* (лежит/убит), казни -> sprMCKillCut/Chop/Stomp.
+  Казнь у хоста: аватар скрыт, рисует objCoopNet Draw (net_biker_exec_draw); спрайт — net_exec_lspr,
+  а если -1 (обычные казни, objPMacheteKill и т. п.) — sprite_index объекта казни; кадр — по доле
+  прогресса. Клиентам — подмена спрайта сущности BODY в net_ents_send.
+- HUD: net_pl_label («Имя [BIKER]»), net_wpn_text у Байкера — «Тесак  ножи N».
+- Проверено на стенде: лобби BIKER, нож (2 осталось), казнь у хоста и клиента в спрайтах Байкера,
+  лежащий Байкер в sprMCBack*. Скорость Байкера в оригинале та же, что у Джека (myspeed 3).

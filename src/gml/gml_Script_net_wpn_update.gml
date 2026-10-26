@@ -24,6 +24,12 @@ for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
     {
         global.pw_reload[i] -= 1;
     }
+    // v1.8: Байкер всегда с тесаком (как мачете — режет с одного удара), чужое оружие не берёт
+    if (net_biker(i) && global.ps_state[i] == global.NET_PS_ALIVE)
+    {
+        global.pw_wpn[i] = 18;
+        global.pw_ammo[i] = 0;
+    }
     if (global.pin_pick[i] == global.pin_pick_done[i])
     {
         continue;
@@ -41,6 +47,11 @@ for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
     // v1.4: сначала сюжетный предмет (кейс, телефон...), иначе — оружие
     if (net_pickup_special(a.x, a.y, a.dir, i) || net_story_try(a.x, a.y, a.dir, i))
     {
+        continue;
+    }
+    if (net_biker(i))
+    {
+        net_biker_throw(a, i);
         continue;
     }
     with (a)

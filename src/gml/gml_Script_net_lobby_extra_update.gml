@@ -17,7 +17,8 @@ if (global.net_mode == global.NET_MODE_HOST)
             global.pl_skin[i] = 0;
         }
     }
-    global.pl_skin[1] = global.net_skin_my;
+    global.net_skin_my = 0; // v1.8: хост — Джек (игра ведёт его настоящий objPlayer)
+    global.pl_skin[1] = 0;
     if ((current_time - global.lx_t) < 500)
     {
         exit;
@@ -29,6 +30,10 @@ if (global.net_mode == global.NET_MODE_HOST)
     {
         buffer_write(w, buffer_u8, global.pl_skin[i]);
         buffer_write(w, buffer_u8, i == 1 || global.pl_save_ok[i]);
+    }
+    for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
+    {
+        buffer_write(w, buffer_u8, clamp(global.pk_knives[i], 0, 255)); // v1.8
     }
     var size = buffer_tell(w);
     for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
