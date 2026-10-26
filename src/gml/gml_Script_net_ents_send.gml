@@ -50,12 +50,12 @@ with (objThrowingWeapon)
 with (objPlayer)
 {
     global.ent_ovr_spr = net_exec_lspr();
-    if (net_biker(net_exec_owner()) && (global.ent_ovr_spr < 0 || !sprite_exists(global.ent_ovr_spr)))
+    if (net_exec_owner() >= 2 && net_biker(net_exec_owner()) && (global.ent_ovr_spr < 0 || !sprite_exists(global.ent_ovr_spr)))
     {
         // v1.8: обычная казнь Байкера — объект казни и есть спрайт игрока (у клиента подменится)
         global.ent_ovr_spr = sprite_index;
     }
-    if (global.ent_ovr_spr >= 0 && sprite_exists(global.ent_ovr_spr) && net_biker(net_exec_owner()))
+    if (global.ent_ovr_spr >= 0 && sprite_exists(global.ent_ovr_spr) && net_exec_owner() >= 2 && net_biker(net_exec_owner()))
     {
         // v1.8: казнь Байкера — его спрайт (sprMCKill*), кадр в пределах его анимации
         var bs = net_skin_spr(1, global.ent_ovr_spr);

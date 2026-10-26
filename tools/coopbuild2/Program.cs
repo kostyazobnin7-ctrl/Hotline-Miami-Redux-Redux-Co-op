@@ -183,6 +183,24 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     }
 }
 
+// --- 12. v1.8.1: HUD читает поля своего игрока, а не первого objPlayer (объект казни клиента) ---
+{
+    var rxHud = new Regex(@"\bobjPlayer\.(\w+)\b(?!\s*(?:=(?!=)|\+=|-=|\*=|/=))");
+    int nh = 0;
+    foreach (var cn in new[] { "gml_Script_scrDrawHUD", "gml_Script_scrStoryDrawAmmo", "gml_Object_objEffector_Draw_0", "gml_Object_objEffectorHouse_Draw_0" })
+    {
+        if (data.Code.ByName(cn) == null) continue;
+        var t = Cur(cn);
+        t = rxHud.Replace(t, m => { nh++; return "net_hud_player()." + m.Groups[1].Value; });
+        finalText[cn] = t;
+    }
+    Console.WriteLine($"  HUD: objPlayer. -> net_hud_player(). {nh} мест");
+    // хост-Байкер: ПКМ без подбора оружия (после генерации net_c_pickup_special!)
+    finalText["gml_Script_scrPlayerPickUp"] = "if (net_host_biker_pick())\n{\n    exit;\n}\n" + Cur("gml_Script_scrPlayerPickUp");
+    // хост-Байкер: тело
+    finalText["gml_Object_objPlayerDead_Draw_0"] = "if (global.net_started && net_biker(1))\n{\n    var nbs = net_skin_spr(1, sprite_index);\n    draw_sprite_ext(nbs, image_index mod max(1, sprite_get_number(nbs)), x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);\n    exit;\n}\n" + Cur("gml_Object_objPlayerDead_Draw_0");
+}
+
 // --- Импорт ---
 var group = new UndertaleModLib.Compiler.CodeImportGroup(data);
 foreach (var kv in finalText) group.QueueReplace(kv.Key, kv.Value);

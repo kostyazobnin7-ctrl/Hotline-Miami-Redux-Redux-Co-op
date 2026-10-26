@@ -17,8 +17,7 @@ if (global.net_mode == global.NET_MODE_HOST)
             global.pl_skin[i] = 0;
         }
     }
-    global.net_skin_my = 0; // v1.8: хост — Джек (игра ведёт его настоящий objPlayer)
-    global.pl_skin[1] = 0;
+    global.pl_skin[1] = global.net_skin_my; // v1.8.1: хост тоже может быть Байкером
     if ((current_time - global.lx_t) < 500)
     {
         exit;

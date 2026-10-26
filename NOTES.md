@@ -150,3 +150,15 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
 - HUD: net_pl_label («Имя [BIKER]»), net_wpn_text у Байкера — «Тесак  ножи N».
 - Проверено на стенде: лобби BIKER, нож (2 осталось), казнь у хоста и клиента в спрайтах Байкера,
   лежащий Байкер в sprMCBack*. Скорость Байкера в оригинале та же, что у Джека (myspeed 3).
+
+## v1.8.1 (протокол 16)
+
+- Вылет хоста scrDrawHUD: «objPlayer.поле» брал первый экземпляр objPlayer/детей — во время казни
+  клиента это объект казни (objPTigerKill и др., нет ammo). В scrDrawHUD, scrStoryDrawAmmo,
+  objEffector/objEffectorHouse Draw чтения -> net_hud_player() (свой игрок, не казнь клиента).
+- Хост-Байкер: pl_skin[1] = net_skin_my; net_host_biker_step — спрайт ходьбы -> sprPWalkMachete;
+  scrPlayerPickUp -> net_host_biker_pick (особые подборы, иначе нож); objPlayerDead Draw — тело
+  Байкера; казнь хоста рисует objCoopNet Draw. ВАЖНО: Draw objPlayerMouse ведёт состояние (dir к
+  мыши, reload--, light) — net_skin_draw_self теперь делает это сам (в 1.7–1.8 хост-скин ломал
+  перезарядку и прицел).
+- Проверено: казнь клиентом при хосте-Байкере без вылета, нож хоста. Казнь хостом-Байкером — нет.
