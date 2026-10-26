@@ -59,6 +59,46 @@ if (kind == global.ST_USE)
     }
     net_log("сюжет: повтор " + object_get_name(ob));
 }
+else if (kind == global.ST_PICK)
+{
+    // v1.6: особый подбор хоста за клиента — повторить у себя (маска откроется и в своём сохранении)
+    var p2 = global.net_dummy;
+    if (p2 == -4 || !instance_exists(p2) || p2.object_index != objPlayer)
+    {
+        exit;
+    }
+    var qx = p2.x;
+    var qy = p2.y;
+    var qd = p2.dir;
+    var qs = p2.sprite_index;
+    var nx2 = argument4;
+    var ny2 = argument5;
+    var nd2 = argument6;
+    with (p2)
+    {
+        x = nx2;
+        y = ny2;
+        dir = nd2;
+        sprite_index = sprPWalkUnarmed;
+    }
+    global.st_run = 1;
+    with (p2)
+    {
+        net_c_pickup_special();
+    }
+    global.st_run = 0;
+    if (instance_exists(p2))
+    {
+        with (p2)
+        {
+            x = qx;
+            y = qy;
+            dir = qd;
+            sprite_index = qs;
+        }
+    }
+    net_log("подбор: повтор особого предмета");
+}
 else if (kind == global.ST_LC)
 {
     // v1.4.4: надпись конца уровня — только по команде хоста, одна

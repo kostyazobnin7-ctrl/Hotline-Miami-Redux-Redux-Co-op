@@ -27,7 +27,7 @@ for (var k = 0; k < global.st_nobj; k += 1)
 {
     with (global.st_obj[k])
     {
-        if (ds_list_find_index(lst, id) < 0 && distance_to_point(px, py) < global.ST_NEAR)
+        if (ds_list_find_index(lst, id) < 0 && (own || distance_to_point(px, py) < global.ST_NEAR_CL))
         {
             ds_list_add(lst, id);
         }

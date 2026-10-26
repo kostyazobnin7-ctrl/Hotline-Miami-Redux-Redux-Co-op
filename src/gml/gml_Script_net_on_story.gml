@@ -32,7 +32,7 @@ for (var j = 0; j < n; j += 1)
     var seq = buffer_read(b, buffer_u16);
     var kind = buffer_read(b, buffer_u8);
     var a, bb, c, d, e, f;
-    if (kind == global.ST_USE)
+    if (kind == global.ST_USE || kind == global.ST_PICK)
     {
         if ((buffer_tell(b) + 12) > sz)
         {

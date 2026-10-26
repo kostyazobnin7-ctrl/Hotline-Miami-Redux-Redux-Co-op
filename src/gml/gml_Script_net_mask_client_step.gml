@@ -7,16 +7,7 @@ if (me <= 0)
 {
     exit;
 }
-if (global.net_mask_pick && (instance_exists(objEffector) || instance_exists(objEffectorHospital)))
-{
-    global.net_mask_pick = 0;
-    if (!instance_exists(objMaskMenu))
-    {
-        global.maskonsaved = 0;
-        instance_create(0, 0, objMaskMenu);
-        net_log("маска: выбор после перезапуска");
-    }
-}
+net_mask_pick_step();
 var open = net_mask_menu_open();
 var d = global.net_dummy;
 // подтверждение: меню ещё есть, но выбор закрыт (если меню исчезло при смене комнаты — выбора не было)

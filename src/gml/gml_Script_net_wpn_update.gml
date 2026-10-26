@@ -39,7 +39,7 @@ for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
         continue;
     }
     // v1.4: сначала сюжетный предмет (кейс, телефон...), иначе — оружие
-    if (net_story_try(a.x, a.y, a.dir, i))
+    if (net_pickup_special(a.x, a.y, a.dir, i) || net_story_try(a.x, a.y, a.dir, i))
     {
         continue;
     }

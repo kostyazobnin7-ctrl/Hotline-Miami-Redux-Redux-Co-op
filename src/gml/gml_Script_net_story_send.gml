@@ -37,7 +37,7 @@ for (var s = first; s <= global.st_seq; s += 1)
     }
     buffer_write(w, buffer_u16, s);
     buffer_write(w, buffer_u8, global.st_r_kind[k]);
-    if (global.st_r_kind[k] == global.ST_USE)
+    if (global.st_r_kind[k] == global.ST_USE || global.st_r_kind[k] == global.ST_PICK)
     {
         buffer_write(w, buffer_u16, global.st_r_a[k]);
         buffer_write(w, buffer_s16, clamp(round(global.st_r_b[k]), -32768, 32767));

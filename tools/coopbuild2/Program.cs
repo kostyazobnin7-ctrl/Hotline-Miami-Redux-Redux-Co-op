@@ -102,16 +102,6 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     finalText[cn] = "if (net_lc_hook())\n{\n    instance_destroy();\n    exit;\n}\n" + Cur(cn);
 }
 
-// --- 7. v1.4.4: при перезапуске хост в сети не выбирает маску заново ---
-foreach (var cn in new[] { "gml_Object_objEffector_Step_0", "gml_Object_objEffectorHouse_Draw_0" })
-{
-    var t = Cur(cn);
-    int n = Regex.Matches(t, @"global\.maskonsaved = 0;").Count;
-    if (n == 0) throw new Exception(cn + ": нет maskonsaved = 0");
-    finalText[cn] = t.Replace("global.maskonsaved = 0;", "net_mask_restart_reset();");
-    Console.WriteLine($"  {cn}: maskonsaved x{n}");
-}
-
 // --- 8. v1.4.4: global.done = 1 у клиента не ставится (решает хост) ---
 {
     int files = 0, refs = 0;
@@ -128,6 +118,17 @@ foreach (var cn in new[] { "gml_Object_objEffector_Step_0", "gml_Object_objEffec
         files++; refs += n;
     }
     Console.WriteLine($"  global.done = 1 -> net_done_set: {files} фрагментов, {refs} мест");
+}
+
+// --- 9. v1.6: особые подборы (маски с пола, буквы, улики, коробки...) для аватаров клиентов ---
+// Начало scrPlayerPickUp до «release = 0;» — только особые предметы, каждый с exit; дальше оружие.
+{
+    var t = Cur("gml_Script_scrPlayerPickUp");
+    int cut = t.IndexOf("\nrelease = 0;");
+    if (cut < 0) throw new Exception("scrPlayerPickUp: нет «release = 0;»");
+    finalText["gml_Script_net_c_pickup_special"] =
+        "/// net_c_pickup_special()\n// Сгенерировано coopbuild2 из scrPlayerPickUp (особые подборы), выполняется в контексте objPlayer\n"
+        + t.Substring(0, cut) + "\n";
 }
 
 // --- Импорт ---

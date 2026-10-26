@@ -133,6 +133,10 @@ else if (typ == global.NET_MSG_MASK)
 {
     net_on_mask(b, sz, ip, port);
 }
+else if (typ == global.NET_MSG_PROG)
+{
+    net_on_prog(b, sz, ip, port);
+}
 else
 {
     global.net_drops += 1;

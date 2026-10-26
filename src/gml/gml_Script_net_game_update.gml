@@ -36,7 +36,12 @@ if (global.net_mode == global.NET_MODE_HOST)
         }
         global.av[i] = inst;
     }
-    if (!global.net_restarting && (instance_exists(objPlayer) || global.ps_state[1] != global.NET_PS_ALIVE))
+    if (!global.net_restarting)
+    {
+        net_mask_pick_step(); // v1.6: хост тоже выбирает маску после перезапуска
+    }
+    // v1.6: на паузе (rmPause) таймеры «лежит» и проверка «все мертвы» стоят
+    if (!global.net_restarting && room != rmPause && (instance_exists(objPlayer) || global.ps_state[1] != global.NET_PS_ALIVE))
     {
         net_input_read_local(1);
         net_ps_update();
@@ -63,7 +68,13 @@ if (global.net_mode == global.NET_MODE_HOST)
         {
             net_debug_shoot(209, 1);
         }
-        if (keyboard_check_pressed(vk_f12))
+        if (keyboard_check_pressed(vk_f12) && keyboard_check(vk_control))
+        {
+            // v1.6: проверка PROG — хост «открывает» последний уровень (только в памяти)
+            global.levels[10] = 1;
+            net_log("debug: levels[10] = 1");
+        }
+        else if (keyboard_check_pressed(vk_f12))
         {
             if (keyboard_check(vk_shift))
             {
@@ -126,7 +137,11 @@ if (global.net_mode == global.NET_MODE_HOST)
             global.done = 1;
             room_goto(rmAlley);
         }
-        if (keyboard_check_pressed(vk_f2) && keyboard_check(vk_shift))
+        if (keyboard_check_pressed(vk_f2) && keyboard_check(vk_control))
+        {
+            net_debug_move_p2(objToken); // v1.6: P2 к букве
+        }
+        else if (keyboard_check_pressed(vk_f2) && keyboard_check(vk_shift))
         {
             if (global.done == 1 && instance_exists(objPlayerCarEnter))
             {
@@ -179,6 +194,10 @@ if (global.net_mode == global.NET_MODE_HOST)
     if ((global.net_tick % 15) == 7)
     {
         net_props_send();
+    }
+    if ((global.net_tick % 120) == 17)
+    {
+        net_prog_send(); // v1.6: прогресс сюжета клиентам
     }
     if ((global.net_tick % 30) == 11 || room != global.net_flow_room)
     {

@@ -1,4 +1,4 @@
-global.NET_PROTO = 12;
+global.NET_PROTO = 13;
 global.NET_MAX_PLAYERS = 4;
 global.NET_PORT_TRIES = 8;
 global.NET_PING_INTERVAL_MS = 1000;
@@ -31,6 +31,7 @@ global.NET_MSG_STORY = 23;
 global.NET_MSG_PROPS = 24;
 global.NET_MSG_FLOW = 25;
 global.NET_MSG_MASK = 26;
+global.NET_MSG_PROG = 27;
 global.NET_DOORS_MAX = 150;
 global.NET_TGT_NONE_DIST = 4000;
 global.NET_RESTART_INPLACE_MS = 5000;

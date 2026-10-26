@@ -27,6 +27,7 @@ for (var k = 0; k < global.ST_RING; k += 1)
     global.st_r_f[k] = 0;
 }
 global.net_flow_room = -1;
+global.net_rs_last = -1; // v1.6: комната прошлого net_room_start (пауза)
 // v1.4.4: музыка (хост — состояние, клиент — что уже включил)
 global.net_mus_seq = 0;
 global.net_mus_on = 0;
@@ -42,6 +43,13 @@ for (var mi = 0; mi <= global.NET_MAX_PLAYERS; mi += 1)
 global.net_mask_pick = 0;
 global.net_mask_menu_was = 0;
 global.ST_LC = 3;      // надпись «CHAPTER CLEAR» (objLevelComplete): x, y
-global.st_lc_allow = 0; // хост: комната последней отправки FLOW
+global.st_lc_allow = 0;
+global.ST_PICK = 4;     // v1.6: особый подбор (маска с пола и т. п.): d, e = x, y; f = dir
+global.ST_NEAR_CL = 48; // v1.6: радиус сюжетного предмета для клиентов
+global.prog_sess = -1;  // v1.6: сессия, для которой запомнен прогресс хоста
+for (var pk = 0; pk < 256; pk += 1)
+{
+    global.prog_base[pk] = 1;
+} // хост: комната последней отправки FLOW
 global.net_flow_have = 0; // клиент: получен ли FLOW от хоста
 net_story_list();
