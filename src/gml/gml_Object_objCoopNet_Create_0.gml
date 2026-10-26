@@ -1,6 +1,13 @@
 net_config();
 net_parse_args();
 net_story_init(); // v1.4: сюжетные предметы и диалоги
+// v1.9: журнал сбоев и статистика игроков
+global.crash_room = -1;
+net_crash_init();
+global.stat_en = ds_map_create();
+global.stat_room = -1;
+global.stat_hx = 0;
+net_stats_reset();
 global.net_overlay = 1;
 depth = -10000;
 global.net_socket = -1;

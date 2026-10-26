@@ -171,3 +171,16 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   (значение считается ДО with — внутри with select читался бы у игрока -> вылет, проверено).
   Плюс в Draw objPlayerMouse и scrDrawMask draw_sprite_ext -> net_draw_sprite_ext (пропуск -1).
 - Байкер: кадр по доле анимации (net_skin_frame), а не mod — удары не обрываются.
+
+## v1.9 (протокол 18)
+
+- Журнал сбоев (try/catch в GMS 1.4 нет): objCoopNet Create -> net_crash_init — если осталась метка
+  coop_running.flag, прошлый запуск вылетел: coop_context.txt -> coop_crash_context.txt, crash_prev,
+  красная подсказка в меню (Draw_64) и строка в журнале при старте сети. Метка снимается в Game End
+  (objCoopNet Other_3 -> net_crash_clean_exit). net_crash_ctx раз в секунду и при смене комнаты:
+  режим, комната, игроки, все objPlayer-семейство с объектами и спрайтами, число врагов/боссов.
+  Проверено: kill -> подсказка и файл; QUIT GAME -> метки нет.
+- Итоги уровня: net_stats_update (хост) — исчезнувший objEnemy ближайшему живому игроку; казни:
+  клиенты в net_avatar_execute, хост — его игрок стал объектом *Kill*; падения в net_player_down.
+  Сброс при входе в rmChapter. LOOK(28) + 3 x u16 на игрока. net_score_ui в rmScore/rmScoreDetails.
+  Проверено: P1 2 врага 1 падение, P2 1 казнь — у хоста и клиента.

@@ -34,6 +34,12 @@ if (global.net_mode == global.NET_MODE_HOST)
     {
         buffer_write(w, buffer_u8, clamp(global.pk_knives[i], 0, 255)); // v1.8
     }
+    for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
+    {
+        buffer_write(w, buffer_u16, clamp(global.stat_kills[i], 0, 65535)); // v1.9
+        buffer_write(w, buffer_u16, clamp(global.stat_execs[i], 0, 65535));
+        buffer_write(w, buffer_u16, clamp(global.stat_downs[i], 0, 65535));
+    }
     var size = buffer_tell(w);
     for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
     {

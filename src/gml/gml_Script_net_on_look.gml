@@ -21,3 +21,9 @@ for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 1) <= argument1
 {
     global.pk_knives[i] = buffer_read(b, buffer_u8); // v1.8
 }
+for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 6) <= argument1; i += 1)
+{
+    global.stat_kills[i] = buffer_read(b, buffer_u16); // v1.9
+    global.stat_execs[i] = buffer_read(b, buffer_u16);
+    global.stat_downs[i] = buffer_read(b, buffer_u16);
+}
