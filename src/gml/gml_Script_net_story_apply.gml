@@ -17,12 +17,9 @@ if (kind == global.ST_USE)
         exit;
     }
     var p = global.net_dummy;
-    if (p == -4 || !instance_exists(p))
+    if (p == -4 || !instance_exists(p) || p.object_index != objPlayer)
     {
-        p = instance_find(objPlayer, 0);
-    }
-    if (p == noone || p == -4)
-    {
+        net_log("сюжет: нет манекена objPlayer");
         exit;
     }
     var sx = p.x;

@@ -129,7 +129,7 @@ if (global.net_mode == global.NET_MODE_HOST)
         }
         if (keyboard_check_pressed(vk_f10))
         {
-            net_debug_spawn_weapon(2);
+            net_debug_spawn_weapon(2 + keyboard_check(vk_control)); // Ctrl — под P3
         }
     }
     if (room != global.net_world_room || (current_time - global.net_world_t) >= global.NET_WORLD_RESEND_MS)
@@ -153,8 +153,12 @@ if (global.net_mode == global.NET_MODE_HOST)
     // v1.4: свои нажатия хоста по сюжетным предметам и рассылка сюжетных событий
     if ((mouse_check_button_pressed(mb_right) || mouse_check_button_pressed(mb_left)) && global.ps_state[1] == global.NET_PS_ALIVE && instance_exists(objPlayer))
     {
+        // objPlayer может быть «наследником» (objEnemyBash и т. п. при ударах) — у него нет dir/active
         var hp = instance_find(objPlayer, 0);
-        net_story_try(hp.x, hp.y, hp.dir, 1);
+        if (hp.object_index == objPlayer)
+        {
+            net_story_try(hp.x, hp.y, hp.dir, 1);
+        }
     }
     net_story_send();
     if ((global.net_tick % 15) == 7)

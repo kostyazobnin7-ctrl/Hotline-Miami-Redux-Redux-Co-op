@@ -7,7 +7,16 @@ var px = argument0;
 var py = argument1;
 var pdir = argument2;
 var own = (argument3 == 1);
-var p = instance_find(objPlayer, 0);
+// Только настоящий objPlayer: при ударах/казнях его место занимают дочерние объекты
+// (objEnemyBash...), у которых нет dir/active — тогда предметы не трогаем.
+var p = noone;
+with (objPlayer)
+{
+    if (object_index == objPlayer)
+    {
+        p = id;
+    }
+}
 if (p == noone)
 {
     return 0;
@@ -22,6 +31,11 @@ for (var k = 0; k < global.st_nobj; k += 1)
             ds_list_add(lst, id);
         }
     }
+}
+if (ds_list_size(lst) == 0)
+{
+    ds_list_destroy(lst);
+    return 0;
 }
 var sx = p.x;
 var sy = p.y;
