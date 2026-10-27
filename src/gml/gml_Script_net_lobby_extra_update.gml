@@ -33,6 +33,7 @@ if (global.net_mode == global.NET_MODE_HOST)
     for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
     {
         buffer_write(w, buffer_u8, clamp(global.pk_knives[i], 0, 255)); // v1.8
+        buffer_write(w, buffer_u8, clamp(global.pk_armor[i], 0, 255)); // v2.0
     }
     for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
     {

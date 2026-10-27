@@ -1,8 +1,12 @@
 /// net_pl_label(pid)
-// v1.8: имя игрока для панелей, с персонажем: «Ник [BIKER]».
+// Имя игрока для панелей, с персонажем: «Ник [BIKER]», «Ник [MARTIN]».
 var s = global.pl_name[argument0];
-if (net_biker(argument0))
+if (global.pl_skin[argument0] == 1)
 {
     s += " [BIKER]";
+}
+else if (global.pl_skin[argument0] == 2)
+{
+    s += " [MARTIN]";
 }
 return s;

@@ -2,8 +2,17 @@ x += draw_offx;
 y += draw_offy;
 if (legs)
 {
-    draw_sprite_ext(sprLegs, legindex, x + 1, y + 1, 1, 1, legdir, c_black, 0.5);
-    draw_sprite_ext(sprLegs, legindex, x, y, 1, 1, legdir, c_white, 1);
+    var alg = sprLegs; // v2.0: ноги по персонажу
+    if (global.pl_skin[pid] == 1)
+    {
+        alg = sprBikerLegs;
+    }
+    else if (global.pl_skin[pid] == 2)
+    {
+        alg = sprPigButcherLegs;
+    }
+    draw_sprite_ext(alg, legindex, x + 1, y + 1, 1, 1, legdir, c_black, 0.5);
+    draw_sprite_ext(alg, legindex, x, y, 1, 1, legdir, c_white, 1);
 }
 // v1.7: скин игрока (Джек / Байкер)
 var bspr = net_skin_spr(global.pl_skin[pid], sprite_index);
@@ -14,7 +23,7 @@ if (bspr != sprite_index)
 }
 draw_sprite_ext(bspr, bimg, x + 1, y + 1, 1, left, dir, c_black, 0.5);
 draw_sprite_ext(bspr, bimg, x, y, 1, left, dir, c_white, 1);
-if (global.pl_skin[pid] != 1)
+if (global.pl_skin[pid] == 0)
 {
     net_mask_draw(pid); // v1.4.4: маска игрока (FLOW); у Байкера — шлем, маску не рисуем
 }

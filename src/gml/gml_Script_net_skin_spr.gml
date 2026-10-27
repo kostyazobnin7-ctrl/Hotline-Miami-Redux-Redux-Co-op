@@ -4,7 +4,15 @@
 //  лежит/убит sprPBack*/sprPFront* -> sprMCBack*/sprMCFront* (те же позы у Байкера),
 //  казни -> sprMCKillCut (клинки), sprMCKillChop (топор/тесак), sprMCKillStomp (остальное).
 // Собственные спрайты Байкера (sprBiker*, sprMC*, sprBoss2*) — как есть.
-if (argument0 != 1 || !sprite_exists(argument1))
+if (!sprite_exists(argument1))
+{
+    return argument1;
+}
+if (argument0 == 2)
+{
+    return net_skin_spr_martin(argument1); // v2.0: Мартин Браун
+}
+if (argument0 != 1)
 {
     return argument1;
 }

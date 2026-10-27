@@ -206,6 +206,7 @@ if (global.net_mode == global.NET_MODE_HOST)
     net_story_send();
     net_stats_update(); // v1.9
     net_host_biker_step(); // v1.8.1
+    net_host_martin_step(); // v2.0
     if ((global.net_tick % 15) == 7)
     {
         net_props_send();

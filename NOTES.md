@@ -184,3 +184,20 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   клиенты в net_avatar_execute, хост — его игрок стал объектом *Kill*; падения в net_player_down.
   Сброс при входе в rmChapter. LOOK(28) + 3 x u16 на игрока. net_score_ui в rmScore/rmScoreDetails.
   Проверено: P1 2 врага 1 падение, P2 1 казнь — у хоста и клиента.
+
+## v2.0 (протокол 19)
+
+- Мартин Браун: в игре нет objPlayerMartin (есть только sprMartinDead). Используется Мясник-свинья
+  (objPigButcher, rmTrailer) — роль Мартина в HLM2. pl_skin = 2, кнопка SKIN 0/1/2.
+- Спрайты: net_skin_spr_martin — sprPWalkX/sprPAttackX -> sprPigButcherWalk/AttackX (Kalashnikov->AK,
+  NightStick->Stick, DoubleBarrel1), запасные Club; без оружия sprPigButcher/Attack; лежит/убит
+  sprPigDeadBlunt/Shot; казни sprPigButcherKill/Stomp. Ноги sprPigButcherLegs. Маска не рисуется.
+- Удар головой (scrHeadButtEnemy + objPigHeadButt): net_martin_headbutt — objEnemy в 12 px спереди
+  (кроме objDogPatrol, objEnemyFat, полиции, objEDodger/G), сразу убит (sprEDeadHammer, очки 200+400).
+  Аватар: Space сначала удар головой, иначе net_avatar_execute (иначе захват за горло objPAttackThroat).
+  Хост: objPlayerMouse KeyPress_32 -> net_host_martin_space, анимация — таймер mh_t в net_skin_draw_self.
+- Броня (Collision_209 objPigButcher, energie): pk_armor = 1 на этаж; аватар — net_avatar_take_hit,
+  хост — objPlayerMouse Collision_209 -> net_martin_armor. LOOK + u8 броня.
+- Обобщено на любой скин: net_biker_exec_draw(exec, skin), ents_send, objPlayerDead Draw, HUD.
+- Проверено: лобби MARTIN у обоих, броня хоста поглотила пулю, удар головой клиента убил врага,
+  спрайты Мясника. Не проверено вживую: удар головой хоста, броня клиента (тестовая пуля мимо).

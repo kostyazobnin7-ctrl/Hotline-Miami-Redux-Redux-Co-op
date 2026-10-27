@@ -152,6 +152,10 @@ else
                 {
                     s += "  [BIKER]";
                 }
+                else if (global.pl_skin[i] == 2)
+                {
+                    s += "  [MARTIN]";
+                }
                 if (i >= 2 && !global.pl_save_ok[i])
                 {
                     s += "  (save...)";
@@ -241,9 +245,13 @@ else
     {
         sks = "SKIN: BIKER";
     }
+    else if (global.net_skin_my == 2)
+    {
+        sks = "SKIN: MARTIN";
+    }
     if (net_ui_button(px, ry, px + bw, ry + bh, sks, !global.net_started))
     {
-        global.net_skin_my = !global.net_skin_my;
+        global.net_skin_my = (global.net_skin_my + 1) mod 3; // v2.0: Джек / Байкер / Мартин
     }
     var mos = "MASK PICK ON RESTART: ON";
     if (!global.net_opt_masks)

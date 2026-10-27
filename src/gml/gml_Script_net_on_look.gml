@@ -17,9 +17,10 @@ for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 2) <= argument1
     }
     global.pl_save_ok[i] = ok;
 }
-for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 1) <= argument1; i += 1)
+for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 2) <= argument1; i += 1)
 {
     global.pk_knives[i] = buffer_read(b, buffer_u8); // v1.8
+    global.pk_armor[i] = buffer_read(b, buffer_u8); // v2.0
 }
 for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 6) <= argument1; i += 1)
 {

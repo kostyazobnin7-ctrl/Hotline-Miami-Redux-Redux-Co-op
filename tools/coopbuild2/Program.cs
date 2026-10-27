@@ -198,7 +198,7 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     // хост-Байкер: ПКМ без подбора оружия (после генерации net_c_pickup_special!)
     finalText["gml_Script_scrPlayerPickUp"] = "if (net_host_biker_pick())\n{\n    exit;\n}\n" + Cur("gml_Script_scrPlayerPickUp");
     // хост-Байкер: тело
-    finalText["gml_Object_objPlayerDead_Draw_0"] = "if (global.net_started && net_biker(1))\n{\n    var nbs = net_skin_spr(1, sprite_index);\n    draw_sprite_ext(nbs, net_skin_frame(sprite_index, image_index, nbs), x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);\n    exit;\n}\n" + Cur("gml_Object_objPlayerDead_Draw_0");
+    finalText["gml_Object_objPlayerDead_Draw_0"] = "if (global.net_started && global.pl_skin[1] != 0)\n{\n    var nbs = net_skin_spr(global.pl_skin[1], sprite_index);\n    draw_sprite_ext(nbs, net_skin_frame(sprite_index, image_index, nbs), x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);\n    exit;\n}\n" + Cur("gml_Object_objPlayerDead_Draw_0");
 }
 
 // --- 13. v1.8.2: «Trying to draw non-existing sprite» в Draw objPlayerMouse (босс) ---
@@ -219,6 +219,12 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     }
     Console.WriteLine($"  маски: {nm} записей objPlayer.; draw_sprite_ext -> net_draw_sprite_ext: {nd}");
 }
+
+// --- 14. v2.0: броня хоста-Мартина — пуля поглощается ---
+finalText["gml_Object_objPlayerMouse_Collision_209"] = "if (net_martin_armor(1))\n{\n    with (other)\n        instance_destroy();\n    exit;\n}\n" + Cur("gml_Object_objPlayerMouse_Collision_209");
+
+// v2.0: хост-Мартин — Space по стоящему врагу = удар головой
+finalText["gml_Object_objPlayerMouse_KeyPress_32"] = "if (net_host_martin_space())\n{\n    exit;\n}\n" + Cur("gml_Object_objPlayerMouse_KeyPress_32");
 
 // --- Импорт ---
 var group = new UndertaleModLib.Compiler.CodeImportGroup(data);

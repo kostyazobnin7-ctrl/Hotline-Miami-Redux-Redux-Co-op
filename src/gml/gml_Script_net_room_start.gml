@@ -98,6 +98,7 @@ if (global.net_mode == global.NET_MODE_HOST)
     for (var kn = 0; kn <= global.NET_MAX_PLAYERS; kn += 1)
     {
         global.pk_knives[kn] = 3 - (2 * (global.hardmode == 1)); // v1.8: как ammo у objPlayerBiker
+        global.pk_armor[kn] = 1; // v2.0: броня Мартина
     }
     global.net_restart_sec = 0;
     ds_list_clear(global.net_spur_list);
