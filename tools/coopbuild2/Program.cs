@@ -226,6 +226,36 @@ finalText["gml_Object_objPlayerMouse_Collision_209"] = "if (net_martin_armor(1))
 // v2.0: хост-Мартин — Space по стоящему врагу = удар головой
 finalText["gml_Object_objPlayerMouse_KeyPress_32"] = "if (net_host_martin_space())\n{\n    exit;\n}\n" + Cur("gml_Object_objPlayerMouse_KeyPress_32");
 
+// --- 15. v2.0.1: «objPlayer.поле» во ВСЁМ коде игры — свой игрок, а не первый объект семейства ---
+// Первым экземпляром objPlayer бывает объект казни клиента (objPMacheteKill...) без полей игрока:
+// вылеты scrDrawPlayer (last_sprite), objDrink (drank) и т. п. Чтения -> net_hud_player().поле,
+// записи -> «var __npw = значение; with (net_hud_player()) поле = __npw;».
+{
+    var rxW = new Regex(@"(?m)^(\s*)objPlayer\.(\w+)\s*(=|\+=|-=|\*=|/=)\s*([^;\n]+);");
+    var rxR = new Regex(@"\bobjPlayer\.(\w+)\b(?!\s*(?:=(?!=)|\+=|-=|\*=|/=))");
+    int nf = 0, nw = 0, nr = 0;
+    foreach (var c in data.Code)
+    {
+        if (c.ParentEntry != null) continue;
+        var cn = c.Name.Content;
+        if (cn.StartsWith("gml_Script_net_") || cn.StartsWith("gml_Object_objCoop")) continue;
+        string t;
+        try { t = Cur(cn); } catch { continue; }
+        if (!t.Contains("objPlayer.")) continue;
+        int w0 = 0, r0 = 0;
+        t = rxW.Replace(t, m => { w0++; return m.Groups[1].Value + "var __npw = " + m.Groups[4].Value + ";\n" + m.Groups[1].Value + "with (net_hud_player())\n" + m.Groups[1].Value + "    " + m.Groups[2].Value + " " + m.Groups[3].Value + " __npw;"; });
+        t = rxR.Replace(t, m => { r0++; return "net_hud_player()." + m.Groups[1].Value; });
+        if (w0 + r0 == 0) continue;
+        finalText[cn] = t;
+        nf++; nw += w0; nr += r0;
+    }
+    Console.WriteLine($"  objPlayer.: {nf} фрагментов, записей {nw}, чтений {nr}");
+    // рисование «застывших» игроков при переходе: объекты казни клиентов и манекен пропускать
+    var dp = Cur("gml_Script_scrDrawPlayer");
+    if (!dp.Contains("with (objPlayer)\n    {\n")) throw new Exception("scrDrawPlayer: нет with (objPlayer)");
+    finalText["gml_Script_scrDrawPlayer"] = dp.Replace("with (objPlayer)\n    {\n", "with (objPlayer)\n    {\n        if (id == global.net_dummy || net_exec_owner() >= 2)\n            continue;\n");
+}
+
 // --- Импорт ---
 var group = new UndertaleModLib.Compiler.CodeImportGroup(data);
 foreach (var kv in finalText) group.QueueReplace(kv.Key, kv.Value);
