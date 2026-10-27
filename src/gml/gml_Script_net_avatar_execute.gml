@@ -8,6 +8,7 @@ with (objPlayer)
 {
     ds_list_add(global.net_exec_tmp, id);
 }
+net_exec_x_list(); // v2.2.1: и казни, которые не наследуют objPlayer
 var nw0 = instance_number(objWeaponThrow);
 var w = global.pw_wpn[p];
 var px = instance_create(x, y, objCoopEntity);
@@ -64,6 +65,10 @@ with (objPlayer)
     {
         e = id;
     }
+}
+if (e == -4)
+{
+    e = net_exec_x_new(); // v2.2.1: бензопила по сидящему врагу и т. п.
 }
 if (instance_number(objWeaponThrow) > nw0)
 {

@@ -1,0 +1,28 @@
+/// net_ents_exec_layer()
+// v2.2.1 (вынесено из net_ents_send): для объекта казни (в with) — нижний слой (враг) или
+// спрайт казни Байкера/Мартина отдельной сущностью ENTS. Вызывается и для казней, которые не
+// наследуют objPlayer (net_exec_x).
+global.ent_ovr_spr = net_exec_lspr();
+if (net_exec_owner() >= 2 && global.pl_skin[net_exec_owner()] != 0 && (global.ent_ovr_spr < 0 || !sprite_exists(global.ent_ovr_spr)))
+{
+    // v1.8: обычная казнь Байкера — объект казни и есть спрайт игрока (у клиента подменится)
+    global.ent_ovr_spr = sprite_index;
+}
+if (global.ent_ovr_spr >= 0 && sprite_exists(global.ent_ovr_spr) && net_exec_owner() >= 2 && global.pl_skin[net_exec_owner()] != 0)
+{
+    // v1.8: казнь Байкера — его спрайт (sprMCKill*), кадр в пределах его анимации
+    var bs = net_skin_spr(global.pl_skin[net_exec_owner()], global.ent_ovr_spr);
+    var bf0 = net_exec_lfrm();
+    if (global.ent_ovr_spr == sprite_index)
+    {
+        bf0 = image_index;
+    }
+    global.ent_ovr_frm = floor((bf0 / max(1, sprite_get_number(global.ent_ovr_spr))) * sprite_get_number(bs)) mod max(1, sprite_get_number(bs));
+    global.ent_ovr_spr = bs;
+    net_ents_add(global.NET_ENT_BODY);
+}
+else if (global.ent_ovr_spr >= 0 && sprite_exists(global.ent_ovr_spr))
+{
+    global.ent_ovr_frm = net_exec_lfrm();
+    net_ents_add(global.NET_ENT_BODY);
+}

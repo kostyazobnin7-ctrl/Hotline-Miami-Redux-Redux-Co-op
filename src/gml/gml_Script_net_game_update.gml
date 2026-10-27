@@ -13,11 +13,16 @@ if (global.net_mode == global.NET_MODE_HOST)
         {
             inst = -4;
         }
-        if (global.pl_used[i] && instance_exists(objPlayer))
+        // v2.2.1: хост может быть в казни, которая не наследует objPlayer (net_exec_x) — аватары не трогать
+        if (global.pl_used[i] && (instance_exists(objPlayer) || net_player_inst(1) != -4))
         {
             if (inst == -4)
             {
-                var p = instance_find(objPlayer, 0);
+                var p = net_player_inst(1);
+                if (p == -4)
+                {
+                    p = instance_find(objPlayer, 0);
+                }
                 inst = instance_create(p.x, p.y, objCoopAvatar);
                 inst.pid = i;
                 with (inst)
@@ -41,7 +46,7 @@ if (global.net_mode == global.NET_MODE_HOST)
         net_mask_pick_step(); // v1.6: хост тоже выбирает маску после перезапуска
     }
     // v1.6: на паузе (rmPause) таймеры «лежит» и проверка «все мертвы» стоят
-    if (!global.net_restarting && room != rmPause && (instance_exists(objPlayer) || global.ps_state[1] != global.NET_PS_ALIVE))
+    if (!global.net_restarting && room != rmPause && (instance_exists(objPlayer) || net_player_inst(1) != -4 || global.ps_state[1] != global.NET_PS_ALIVE))
     {
         net_input_read_local(1);
         net_ps_update();
@@ -185,6 +190,22 @@ if (global.net_mode == global.NET_MODE_HOST)
             net_crash_ctx_now();
             var cr9 = 0;
             cr9 = cr9[3];
+        }
+        if (keyboard_check_pressed(vk_f5) && keyboard_check(vk_shift) && !keyboard_check(vk_control))
+        {
+            // v2.2.1: хост превращается в казнь бензопилой по сидящему (не наследует objPlayer) —
+            // как это делает scrKillShield; аватары клиентов не должны пропасть и «телепортироваться»
+            var hp5 = net_player_inst(1);
+            if (hp5 != -4 && net_player_has_vars(hp5.object_index))
+            {
+                with (hp5)
+                {
+                    var cl5 = instance_create(x, y, objPKillChainsawLean);
+                    cl5.image_angle = dir;
+                    instance_destroy();
+                }
+                net_log("debug: хост -> objPKillChainsawLean");
+            }
         }
         if (keyboard_check_pressed(vk_f5) && keyboard_check(vk_control))
         {

@@ -263,3 +263,17 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   16 пакетов (net_crash_pkt в transport_send/receive). Отладка: Ctrl+Shift+F9 — настоящая ошибка.
 - Проверено: TAB у хоста и клиента; вылет через лаунчер -> окно и журнал со стеком; без лаунчера ->
   подсказка в меню.
+
+## v2.2.1 (протокол 24, совместима с 2.2)
+
+- «Всех телепортирует к казнящему»: objPKillChainsawLean и objPKillBottle2 — казни, которые НЕ
+  наследуют objPlayer (остальные — дочерние). Пока хост в такой казни, instance_exists(objPlayer)
+  ложно: net_game_update удалял аватары клиентов и создавал заново у instance_find(objPlayer, 0),
+  т. е. у казнящего. Теперь net_exec_x / net_exec_x_find / _list / _new: net_player_inst(1) находит
+  такую казнь хоста, аватары не трогаются, казнь клиента находится в net_avatar_execute, нижний слой
+  уходит клиентам (net_ents_exec_layer), Draw_0 рисует скин хоста. Отладка: Shift+F5 — хост в эту
+  казнь (заодно F5 переключает сплит отладки). Проверено: аватар P2 остался на месте.
+- Вылет клиента objCoopEntity.ecount в net_ent_push: на стенде не воспроизведён; on_ents берёт из
+  ent_map только objCoopEntity, иначе создаёт призрак заново.
+- Осторожно: objPJacketKillBeer / objPJacketKillNinjaStar / objPBikerKill есть в коде, но объектов
+  с такими именами в data.win нет — в GML такое имя молча становится переменной и роняет игру.

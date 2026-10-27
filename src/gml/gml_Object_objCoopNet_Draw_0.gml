@@ -11,6 +11,11 @@ if (global.net_mode == global.NET_MODE_HOST && global.net_started)
                 net_biker_exec_draw(id, global.pl_skin[1]);
             }
         }
+        var hx = net_exec_x_find(1); // v2.2.1: казнь хоста, которая не наследует objPlayer
+        if (hx != -4)
+        {
+            net_biker_exec_draw(hx, global.pl_skin[1]);
+        }
     }
     for (var bi = 2; bi <= global.NET_MAX_PLAYERS; bi += 1)
     {

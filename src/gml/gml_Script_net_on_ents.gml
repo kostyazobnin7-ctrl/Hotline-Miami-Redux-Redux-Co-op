@@ -58,6 +58,12 @@ for (var k = 0; k < n; k += 1)
         continue;
     }
     var e = ds_map_find_value(global.ent_map, eid);
+    // v2.2.1: id из таблицы мог уже принадлежать другому объекту (призрак удалён, номер занят
+    // экземпляром комнаты) — тогда «objCoopEntity.ecount not set» в net_ent_push. Только наши призраки.
+    if (!is_undefined(e) && instance_exists(e) && e.object_index != objCoopEntity)
+    {
+        e = undefined;
+    }
     if (is_undefined(e) || !instance_exists(e))
     {
         e = instance_create(ex, ey, objCoopEntity);
