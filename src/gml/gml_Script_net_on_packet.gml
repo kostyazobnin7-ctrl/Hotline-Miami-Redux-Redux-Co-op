@@ -33,7 +33,19 @@ else if (typ == global.NET_MSG_PONG)
         }
         else
         {
-            global.net_peer_rtt[pidx] = (global.net_peer_rtt[pidx] * 0.75) + (rtt * 0.25);
+            // v2.1: одиночные всплески (подвис кадра, сборка мусора) почти не двигают число,
+            // устойчивый рост пинга догоняется за пару секунд, падение — быстрее
+            var pa = global.net_peer_rtt[pidx];
+            var pk = 0.2;
+            if (rtt > (pa * 1.5) + 25)
+            {
+                pk = 0.05;
+            }
+            else if (rtt < pa)
+            {
+                pk = 0.3;
+            }
+            global.net_peer_rtt[pidx] = (pa * (1 - pk)) + (rtt * pk);
         }
     }
 }

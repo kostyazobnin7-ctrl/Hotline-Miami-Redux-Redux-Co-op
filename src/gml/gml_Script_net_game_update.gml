@@ -126,6 +126,71 @@ if (global.net_mode == global.NET_MODE_HOST)
         {
             net_debug_knockout(2);
         }
+        if (keyboard_check_pressed(vk_f4) && keyboard_check(vk_control))
+        {
+            net_debug_move_p2(objKnockedOut); // v2.1.1: P2 к нокаутированному врагу (казнь)
+        }
+        else if (keyboard_check_pressed(vk_f4) && !keyboard_check(vk_shift))
+        {
+            // v2.1.1: открыть ближайшую к хосту дверь (проверка синхронизации дверей)
+            var hp3 = net_player_inst(1);
+            if (hp3 != -4)
+            {
+                var dr = instance_nearest(hp3.x, hp3.y, objDoorV);
+                if (dr != noone)
+                {
+                    dr.image_angle = 90;
+                    dr.swingspeed = 0;
+                    net_log("debug: дверь " + object_get_name(dr.object_index) + " (" + string(round(dr.x)) + "," + string(round(dr.y)) + ") открыта на 90");
+                }
+            }
+        }
+        if (keyboard_check_pressed(vk_f4) && keyboard_check(vk_shift))
+        {
+            // v2.1.1: как два удара в одном кадре — ближайший враг даёт два трупа в одной точке
+            var hp7 = net_player_inst(1);
+            if (hp7 != -4)
+            {
+                var e7 = instance_nearest(hp7.x, hp7.y, objEnemy);
+                if (e7 != noone)
+                {
+                    var ex7 = e7.x;
+                    var ey7 = e7.y;
+                    with (e7)
+                    {
+                        instance_destroy();
+                    }
+                    var seen7 = 0;
+                    with (objEnemy)
+                    {
+                        if (id == e7)
+                        {
+                            seen7 = 1;
+                        }
+                    }
+                    net_log("debug: два трупа; with после destroy видит врага: " + string(seen7) + ", exists " + string(instance_exists(e7)));
+                    repeat (2)
+                    {
+                        var db7 = instance_create(ex7, ey7, objDeadBody);
+                        db7.sprite_index = sprEDeadHammer;
+                        db7.image_speed = 0.15;
+                    }
+                }
+            }
+        }
+        if (keyboard_check_pressed(vk_f5) && keyboard_check(vk_control))
+        {
+            // v2.1: экран очков с тестовыми цифрами и длинным ником — проверка таблицы итогов
+            global.pl_name[2] = "Mayonez67Longnick";
+            for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
+            {
+                global.stat_kills[i] = 86 + (i * 17);
+                global.stat_execs[i] = i * 3;
+                global.stat_downs[i] = 12 + i;
+            }
+            net_log("debug: rmScore");
+            room_goto(rmScore);
+        }
         if (keyboard_check_pressed(vk_f1) && keyboard_check(vk_control))
         {
             // v1.4.2: интерлюдия как после машины в доме (песня, revisit, следующая комната)
@@ -226,7 +291,7 @@ if (global.net_mode == global.NET_MODE_HOST)
         net_flow_send();
     }
     net_party_travel();
-    if ((global.net_tick % global.NET_ENTS_EVERY) == 2)
+    if ((global.net_tick % 2) == 0) // v2.1.1: двери 30 раз в секунду
     {
         net_doors_send();
     }

@@ -70,6 +70,8 @@ global.spec_sent_target = -1;
 ds_map_clear(global.net_tgt_map);
 ds_map_clear(global.net_tgt_until);
 ds_map_clear(global.ent_map);
+global.ent_cur_u = -1000000000;
+ds_map_clear(global.dd_map);
 ds_map_clear(global.net_exec_map);
 ds_map_clear(global.door_map);
 global.door_have = 0;

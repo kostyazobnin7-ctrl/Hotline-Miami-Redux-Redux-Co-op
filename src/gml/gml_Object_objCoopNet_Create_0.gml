@@ -32,6 +32,7 @@ for (var pti = 0; pti <= 4; pti += 1)
 }
 global.door_map = ds_map_create();
 global.door_have = 0;
+global.door_dbg_n = -1;
 global.fx_on = 0;
 global.fx_n = 0;
 global.net_local_port = -1;
@@ -43,6 +44,10 @@ global.net_restarting = 0;
 global.net_tgt_map = ds_map_create();
 global.net_tgt_until = ds_map_create();
 global.ent_map = ds_map_create();
+global.ent_cur_u = -1000000000; // v2.1.1: время последнего кадра ENTS
+global.dd_map = ds_map_create(); // v2.1.1: известные хосту тела (поиск двойников)
+global.dd_new = ds_list_create();
+global.dd_count = 0;
 global.ent_next = 1;
 global.ent_n = 0;
 global.ent_cpos = 0;

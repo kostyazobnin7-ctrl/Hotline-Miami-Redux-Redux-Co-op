@@ -44,6 +44,7 @@ if (global.net_mode == global.NET_MODE_HOST)
             global.pin_ack[pid] = global.pin_seq[pid];
             ds_list_clear(global.pin_q[pid]);
         }
+        global.pin_debt[pid] = 0;
     }
 }
 else if (!net_predicting(pid))
