@@ -1,4 +1,4 @@
-global.NET_PROTO = 20;
+global.NET_PROTO = 21;
 global.NET_MAX_PLAYERS = 4;
 global.NET_PORT_TRIES = 8;
 global.NET_PING_INTERVAL_MS = 1000;

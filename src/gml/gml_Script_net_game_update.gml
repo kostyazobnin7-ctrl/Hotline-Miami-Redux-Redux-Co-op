@@ -81,7 +81,13 @@ if (global.net_mode == global.NET_MODE_HOST)
         {
             net_debug_shoot(209, 1);
         }
-        if (keyboard_check_pressed(vk_f12) && keyboard_check(vk_control))
+        if (keyboard_check_pressed(vk_f12) && keyboard_check(vk_control) && keyboard_check(vk_shift))
+        {
+            global.god = 1; // отладка: хост неуязвим, чтобы успеть схватить врага
+            global.ps_god_saved = 1;
+            net_debug_spawn_enemy(1, 1); // v2.0.2: враг перед хостом
+        }
+        else if (keyboard_check_pressed(vk_f12) && keyboard_check(vk_control))
         {
             // v1.6: проверка PROG — хост «открывает» последний уровень (только в памяти)
             global.levels[10] = 1;

@@ -3,6 +3,9 @@ net_parse_args();
 net_story_init(); // v1.4: сюжетные предметы и диалоги
 // v1.9: журнал сбоев и статистика игроков
 global.crash_room = -1;
+global.hp_frame = 0; // v2.0.2: кэш net_hud_player
+global.hp_cache = noone;
+global.hp_cache_f = -1;
 net_crash_init();
 global.stat_en = ds_map_create();
 global.stat_room = -1;
