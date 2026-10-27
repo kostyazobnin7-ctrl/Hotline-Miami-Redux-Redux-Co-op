@@ -1,4 +1,5 @@
-global.NET_PROTO = 23; // v2.1.1: двери по месту, двойники врагов
+global.NET_PROTO = 24; // v2.2: пинг игроков в LOOK, таблица на TAB
+global.COOP_VERSION = "2.2";
 global.NET_MAX_PLAYERS = 4;
 global.NET_PORT_TRIES = 8;
 global.NET_PING_INTERVAL_MS = 500;

@@ -28,3 +28,12 @@ for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 6) <= argument1
     global.stat_execs[i] = buffer_read(b, buffer_u16);
     global.stat_downs[i] = buffer_read(b, buffer_u16);
 }
+for (var i = 1; i <= global.NET_MAX_PLAYERS && (buffer_tell(b) + 2) <= argument1; i += 1)
+{
+    var rt = buffer_read(b, buffer_u16); // v2.2
+    if (rt == 65535)
+    {
+        rt = -1;
+    }
+    global.pl_rtt[i] = rt;
+}

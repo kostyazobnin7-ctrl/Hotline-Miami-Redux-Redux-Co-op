@@ -1,3 +1,10 @@
+// v2.2: чёрный ящик журнала вылета — до всего, что может писать в журнал
+global.crash_ring = ds_list_create();
+global.cr_pk_h = 0;
+for (var i = 0; i < 16; i += 1)
+{
+    global.cr_pk[i] = "";
+}
 net_config();
 net_parse_args();
 net_story_init(); // v1.4: сюжетные предметы и диалоги
@@ -33,6 +40,10 @@ for (var pti = 0; pti <= 4; pti += 1)
 global.door_map = ds_map_create();
 global.door_have = 0;
 global.door_dbg_n = -1;
+for (var i = 0; i <= 4; i += 1)
+{
+    global.pl_rtt[i] = -1; // v2.2: пинг игроков (клиент получает в LOOK)
+}
 global.fx_on = 0;
 global.fx_n = 0;
 global.net_local_port = -1;

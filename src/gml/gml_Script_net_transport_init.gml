@@ -53,7 +53,7 @@ if (global.net_socket < 0)
 net_log("---- старт, режим " + string(global.net_mode) + ", порт " + string(global.net_local_port) + ", протокол " + string(global.NET_PROTO) + ", lag " + string(global.net_lag) + " jitter " + string(global.net_jitter));
 if (global.crash_prev)
 {
-    net_log("ВНИМАНИЕ: прошлый запуск игры завершился вылетом, его состояние — coop_crash_context.txt");
+    net_log("ВНИМАНИЕ: прошлый запуск игры завершился вылетом — журнал coop_crash_log.txt");
 }
 if (global.net_mode == global.NET_MODE_CLIENT)
 {

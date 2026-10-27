@@ -90,6 +90,7 @@ else if (global.net_mode == global.NET_MODE_CLIENT && global.net_conn != global.
         col = 255;
     }
     net_ui_text(gw / 2, ry + (bh / 2), s, col, 1, 1.2);
+    net_ui_text(gw / 2, ry + bh + (24 * u), "PING: Not connected", 8421504, 1, 0.8); // v2.2
     ry += (rh * 2);
     if (net_ui_button((gw - bw) / 2, ry, (gw + bw) / 2, ry + bh, "BACK", 1))
     {
@@ -107,6 +108,16 @@ else
     else
     {
         s = "YOU ARE P" + string(me) + "   host " + global.net_host_ip + ":" + string(global.net_port);
+        // v2.2: пинг до хоста
+        var mr = net_my_rtt();
+        if (mr >= 0)
+        {
+            s += "   PING " + string(mr) + " ms";
+        }
+        else
+        {
+            s += "   PING ...";
+        }
     }
     net_ui_text(px, ry, s, cyan, 0, 1);
     ry += rh;
@@ -161,6 +172,17 @@ else
                     s += "  (save...)";
                 }
                 net_ui_text(px + (120 * u), ry + (bh / 2), s, 16777215, 0, 1);
+                if (!global.pl_host[i] || global.net_mode == global.NET_MODE_CLIENT)
+                {
+                    // v2.2: пинг игрока (у хоста — до каждого клиента, у клиента — до хоста)
+                    var lr = net_pl_rtt(i);
+                    var ls = "-- ms";
+                    if (lr >= 0)
+                    {
+                        ls = string(lr) + " ms";
+                    }
+                    net_ui_text((px + pw) - (230 * u), ry + (bh / 2), ls, net_ping_col(lr), 2, 0.9);
+                }
                 if (global.pl_host[i])
                 {
                     net_ui_text((px + pw) - (20 * u), ry + (bh / 2), "HOST", cyan, 2, 1);

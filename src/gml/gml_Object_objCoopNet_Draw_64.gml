@@ -1,3 +1,4 @@
+net_crash_ui(); // v2.2: окно «произошла ошибка» после вылета
 if (global.lb_open)
 {
     global.lb_drawing = 1;
@@ -14,9 +15,9 @@ else if (global.net_mode == global.NET_MODE_OFF && instance_exists(objTitle))
     draw_text_transformed(display_get_gui_width() - 24, display_get_gui_height() - 24, "[F8] CO-OP", hs, hs, 0);
     if (global.crash_prev)
     {
-        // v1.9: прошлый запуск вылетел
+        // v1.9: прошлый запуск вылетел (v2.2: подробности — окно net_crash_ui, файл coop_crash_log.txt)
         draw_set_color(make_color_rgb(255, 80, 80));
-        draw_text_transformed(display_get_gui_width() - 24, display_get_gui_height() - 24 - (string_height("A") * hs * 1.3), "Last game crashed: send coop_net_*.log and coop_crash_context.txt (%APPDATA%" + chr(92) + "Hotline_Miami_Redux_Redux)", hs * 0.7, hs * 0.7, 0);
+        draw_text_transformed(display_get_gui_width() - 24, display_get_gui_height() - 24 - (string_height("A") * hs * 1.3), "Last game crashed: send coop_crash_log.txt (%APPDATA%" + chr(92) + "Hotline_Miami_Redux_Redux)", hs * 0.7, hs * 0.7, 0);
     }
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
@@ -25,11 +26,34 @@ if (global.net_mode == global.NET_MODE_OFF)
 {
     exit;
 }
+if (global.net_mode == global.NET_MODE_CLIENT && !global.lb_open && instance_exists(objTitle))
+{
+    // v2.2: пинг до хоста в главном меню
+    draw_set_font(fntDate);
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_bottom);
+    var ph = (28 * display_get_gui_height()) / 1080 / max(1, string_height("A"));
+    var mr = net_my_rtt();
+    var ps = "CO-OP: Not connected";
+    if (global.net_conn == global.NET_CONN_CONNECTED)
+    {
+        ps = "CO-OP PING: ...";
+        if (mr >= 0)
+        {
+            ps = "CO-OP PING: " + string(mr) + " ms";
+        }
+    }
+    draw_set_color(net_ping_col(mr));
+    draw_text_transformed(display_get_gui_width() - 24, display_get_gui_height() - 24, ps, ph, ph, 0);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
 if (global.net_started && !global.lb_open)
 {
     net_team_ui();
     net_downed_ui();
     net_score_ui(); // v1.9
+    net_tab_ui(); // v2.2
 }
 if (global.net_mode == global.NET_MODE_CLIENT && global.net_conn == global.NET_CONN_LOST && !global.lb_open)
 {

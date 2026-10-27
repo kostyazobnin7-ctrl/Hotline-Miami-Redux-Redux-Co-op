@@ -178,6 +178,14 @@ if (global.net_mode == global.NET_MODE_HOST)
                 }
             }
         }
+        if (keyboard_check_pressed(vk_f9) && keyboard_check(vk_control) && keyboard_check(vk_shift))
+        {
+            // v2.2: настоящая ошибка выполнения — проверка журнала вылета
+            net_log("debug: искусственный вылет (Ctrl+Shift+F9)");
+            net_crash_ctx_now();
+            var cr9 = 0;
+            cr9 = cr9[3];
+        }
         if (keyboard_check_pressed(vk_f5) && keyboard_check(vk_control))
         {
             // v2.1: экран очков с тестовыми цифрами и длинным ником — проверка таблицы итогов

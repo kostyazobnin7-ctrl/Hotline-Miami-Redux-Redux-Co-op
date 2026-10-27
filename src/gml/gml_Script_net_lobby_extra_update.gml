@@ -41,6 +41,16 @@ if (global.net_mode == global.NET_MODE_HOST)
         buffer_write(w, buffer_u16, clamp(global.stat_execs[i], 0, 65535));
         buffer_write(w, buffer_u16, clamp(global.stat_downs[i], 0, 65535));
     }
+    for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
+    {
+        // v2.2: пинг каждого игрока до хоста (65535 — неизвестно) — для таблицы на TAB
+        var rt = net_pl_rtt(i);
+        if (rt < 0)
+        {
+            rt = 65535;
+        }
+        buffer_write(w, buffer_u16, clamp(rt, 0, 65535));
+    }
     var size = buffer_tell(w);
     for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
     {
