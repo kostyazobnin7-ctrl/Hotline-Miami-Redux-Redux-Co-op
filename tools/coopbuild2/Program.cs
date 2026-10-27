@@ -10,7 +10,7 @@ using UndertaleModLib.Models;
 //  2) правки игрового кода — по декомпилированному тексту (сюжетные предметы, зоны, диалоги);
 //  3) --name меняет имя игры (папку сохранений) для экземпляров стенда.
 if (args.Length < 3) { Console.Error.WriteLine("usage: coopbuild2 <base.win> <out.win> <src/gml> [--name N]"); return 2; }
-var utmt = Environment.GetEnvironmentVariable("COOP_UTMT_DIR") ?? @"C:\Users\kosty\OneDrive\Desktop\UndertaleModTool";
+var utmt = Environment.GetEnvironmentVariable("COOP_UTMT_DIR") ?? throw new Exception("задайте COOP_UTMT_DIR — папку UndertaleModTool / set COOP_UTMT_DIR to the UndertaleModTool folder");
 string? newName = null;
 for (int i = 3; i + 1 < args.Length; i++) if (args[i] == "--name") newName = args[i + 1];
 

@@ -1,6 +1,6 @@
 using UndertaleModLib; using UndertaleModLib.Models; using UndertaleModLib.Decompiler;
 // coopdump <data.win> <outdir> <regex>  — декомпиляция кода с именами ассетов
-var utmt = @"C:\Users\kosty\OneDrive\Desktop\UndertaleModTool";
+var utmt = Environment.GetEnvironmentVariable("COOP_UTMT_DIR") ?? throw new Exception("set COOP_UTMT_DIR to the UndertaleModTool folder");
 using var fs = File.OpenRead(args[0]);
 var data = UndertaleIO.Read(fs, (w, _) => {});
 if (args[1] == "--info") { var g = data.GeneralInfo; Console.WriteLine(g.Name.Content + " | " + g.FileName.Content + " | " + g.DisplayName.Content + " | " + g.GameID + " | " + g.Config.Content); return; }

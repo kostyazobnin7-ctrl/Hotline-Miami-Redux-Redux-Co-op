@@ -53,7 +53,7 @@
 
 ### Сборка из исходников
 
-Код мода — в `src/gml` (GameMaker Language) и `base/gml`. Сборщик `tools/coopbuild2` (C#, UndertaleModLib) собирает `data.win`, `tools/build.py` запускает сборку. Заметки по устройству — в [NOTES.md](NOTES.md).
+Код мода — в `src/gml` (GameMaker Language) и `base/gml`. Сборщик `tools/coopbuild2` (C#, UndertaleModLib) собирает `data.win`, `tools/build.py` запускает сборку. Нужны .NET 10 SDK, Python 3 и UndertaleModTool 0.9.2: путь к нему задаётся переменной окружения `COOP_UTMT_DIR`. Заметки по устройству — в [NOTES.md](NOTES.md).
 
 ---
 
@@ -99,7 +99,7 @@ To play over the internet, install Radmin VPN or ZeroTier, create a shared netwo
 
 ### Building from source
 
-The mod code is in `src/gml` (GameMaker Language) and `base/gml`. The builder `tools/coopbuild2` (C#, UndertaleModLib) builds `data.win`; `tools/build.py` runs the build. Design notes (in Russian) are in [NOTES.md](NOTES.md).
+The mod code is in `src/gml` (GameMaker Language) and `base/gml`. The builder `tools/coopbuild2` (C#, UndertaleModLib) builds `data.win`; `tools/build.py` runs the build. You need the .NET 10 SDK, Python 3 and UndertaleModTool 0.9.2; set `COOP_UTMT_DIR` to its folder. Design notes (in Russian) are in [NOTES.md](NOTES.md).
 
 ---
 

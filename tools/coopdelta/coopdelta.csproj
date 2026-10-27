@@ -1,5 +1,3 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
-  <ItemGroup><Reference Include="UndertaleModLib"><HintPath>C:\Users\kosty\OneDrive\Desktop\UndertaleModTool\UndertaleModLib.dll</HintPath></Reference>
-  <Reference Include="Underanalyzer"><HintPath>C:\Users\kosty\OneDrive\Desktop\UndertaleModTool\Underanalyzer.dll</HintPath></Reference></ItemGroup>
 </Project>
