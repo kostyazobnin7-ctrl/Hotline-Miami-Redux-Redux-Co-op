@@ -29,7 +29,14 @@ $cur = [System.IO.File]::ReadAllBytes($game)
 if (Same (Sha256 $cur) $newSha) { Write-Host "Кооператив этой версии уже установлен. / This co-op version is already installed." -ForegroundColor Green; $fs.Close(); exit 0 }
 if (-not (Same (Sha256 $old) $oldSha)) {
     $fs.Close()
-    throw "Это не та версия Redux-Redux (data.win отличается от ожидаемого). Нужна оригинальная версия мода. / Wrong Redux-Redux version: data.win differs from the expected original."
+    if (-not (Test-Path $orig)) {
+        # нет data.win.original и data.win не оригинал — чаще всего это кооп 1.x из полного архива
+        throw ("data.win — не оригинальная игра (похоже, стоит старый кооп из полного архива или другой мод). " +
+               "Верните оригинальный data.win: переустановите Redux-Redux с Boosty и запустите установку снова. / " +
+               "data.win is not the original game (probably an old full-archive co-op or another mod). " +
+               "Restore the original data.win (reinstall Redux-Redux) and run the installer again.")
+    }
+    throw "Это не та версия Redux-Redux (data.win.original отличается от ожидаемого). Нужна оригинальная версия мода. / Wrong Redux-Redux version: data.win.original differs from the expected original."
 }
 
 Write-Host "Установка... / Installing..."

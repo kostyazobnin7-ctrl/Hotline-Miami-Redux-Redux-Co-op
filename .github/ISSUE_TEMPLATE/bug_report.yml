@@ -1,0 +1,45 @@
+name: 🐞 Ошибка или вылет / Bug or crash
+description: Игра вылетела или что-то работает не так / The game crashed or something is wrong
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо! Если игра вылетела, приложите файл `%APPDATA%\Hotline_Miami_Redux_Redux\coop_crash_log.txt` (перетащите его в поле ниже).
+        Thanks! If the game crashed, attach `%APPDATA%\Hotline_Miami_Redux_Redux\coop_crash_log.txt` (drag it into the field below).
+  - type: input
+    id: version
+    attributes:
+      label: Версия коопа / Co-op version
+      placeholder: "2.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Кто вы в игре / Your role
+      options:
+        - Хост / Host
+        - Клиент / Client
+    validations:
+      required: true
+  - type: dropdown
+    id: character
+    attributes:
+      label: Персонаж / Character
+      options:
+        - Jacket
+        - Biker
+        - Martin
+  - type: textarea
+    id: what
+    attributes:
+      label: Что случилось / What happened
+      description: Уровень, что делали игроки, сколько вас было / Level, what players were doing, how many players
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: coop_crash_log.txt / скриншоты / screenshots
+      description: Перетащите файл или картинки сюда / Drag the file or images here

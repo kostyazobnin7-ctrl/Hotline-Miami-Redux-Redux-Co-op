@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Hotline Miami Redux-Redux Co-op">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a0630"/>
+      <stop offset="0.55" stop-color="#5a0b4d"/>
+      <stop offset="1" stop-color="#ff2f8f"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe066"/>
+      <stop offset="1" stop-color="#ff3d7f"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#000" opacity="0.18"/>
+    </pattern>
+    <clipPath id="sunclip"><rect x="0" y="0" width="1200" height="300"/></clipPath>
+  </defs>
+  <rect width="1200" height="300" fill="url(#sky)"/>
+  <g clip-path="url(#sunclip)">
+    <circle cx="600" cy="345" r="120" fill="url(#sun)" opacity="0.9"/>
+    <g fill="#5a0b4d">
+      <rect x="460" y="246" width="280" height="6"/>
+      <rect x="460" y="262" width="280" height="8"/>
+      <rect x="460" y="280" width="280" height="10"/>
+    </g>
+  </g>
+  <g stroke="#ff2f8f" stroke-width="1.5" opacity="0.5">
+    <line x1="0" y1="290" x2="1200" y2="290"/>
+    <line x1="0" y1="280" x2="1200" y2="280"/>
+  </g>
+  <g font-family="Impact, 'Arial Black', 'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+    <text x="606" y="128" font-size="78" fill="#2a0030" opacity="0.7">HOTLINE MIAMI</text>
+    <text x="600" y="122" font-size="78" fill="#33f0ff" filter="url(#glow)" letter-spacing="2">HOTLINE MIAMI</text>
+    <text x="600" y="172" font-size="40" fill="#ff4fa3" stroke="#2a0030" stroke-width="1.5" filter="url(#glow)" letter-spacing="6">REDUX-REDUX · CO-OP</text>
+    <text x="600" y="208" font-size="20" fill="#ffffff" opacity="0.9" letter-spacing="4" font-family="'Segoe UI', Arial, sans-serif">ONLINE CO-OP FOR UP TO 4 PLAYERS</text>
+  </g>
+  <rect width="1200" height="300" fill="url(#scan)"/>
+</svg>
