@@ -1,3 +1,8 @@
+> [!NOTE]
+> 💜 **Если хотите поддержать труды разработчиков, подпишитесь на [Boosty](https://boosty.to/saldamen).** Подписка не даёт абсолютно никаких преимуществ, только поддержку авторов. Спасибо, ребята!
+>
+> 💜 **If you'd like to support the developers' work, subscribe on [Boosty](https://boosty.to/saldamen).** The subscription gives no in-game advantages at all, it's just support for the authors. Thank you, guys!
+
 <div align="center">
 
 <img src="docs/banner.svg" alt="Hotline Miami Redux-Redux Co-op" width="100%">
