@@ -5,7 +5,7 @@
 **Сетевой кооператив до 4 игроков для фанатского мода _Hotline Miami: Redux-Redux_**
 **Online co-op for up to 4 players for the _Hotline Miami: Redux-Redux_ fan mod**
 
-[Русский](#-русский) · [English](#-english) · [Скачать / Download](../../releases/latest)
+[Русский](#-русский) · [English](#-english) · [Скачать кооп / Download co-op](../../releases/latest) · [Скачать игру / Get the game](https://boosty.to/skide/posts/3ea5910c-28e8-4e7e-8f13-cef3e44840f1)
 
 </div>
 
@@ -28,7 +28,7 @@
 
 ### Установка
 
-1. Нужна установленная **Hotline Miami: Redux-Redux** (оригинальная версия мода).
+1. Нужна установленная игра **Hotline Miami: Redux-Redux**. Скачать её можно на странице автора: [Redux-Redux на Boosty](https://boosty.to/skide/posts/3ea5910c-28e8-4e7e-8f13-cef3e44840f1). Это сама игра; кооператив ставится поверх неё отдельно (шаги ниже).
 2. Скачайте архив из [Releases](../../releases/latest) и распакуйте его **в папку с игрой**.
 3. Запустите `install-coop.bat`. Он проверит версию игры, сохранит копию оригинального `data.win` (`data.win.original`) и установит кооператив.
 4. Запускайте игру как обычно. В главном меню нажмите **F8**, чтобы открыть лобби.
@@ -74,7 +74,7 @@ This mod adds full online co-op to Redux-Redux: you can play through the whole s
 
 ### Installation
 
-1. You need **Hotline Miami: Redux-Redux** installed (the original mod release).
+1. You need the game **Hotline Miami: Redux-Redux** installed. Get it from the author's page: [Redux-Redux on Boosty](https://boosty.to/skide/posts/3ea5910c-28e8-4e7e-8f13-cef3e44840f1). That is the game itself; co-op is installed on top of it separately (steps below).
 2. Download the archive from [Releases](../../releases/latest) and extract it **into the game folder**.
 3. Run `install-coop.bat`. It checks your game version, backs up the original `data.win` (as `data.win.original`) and installs co-op.
 4. Launch the game as usual. Press **F8** in the main menu to open the lobby.
