@@ -27,6 +27,13 @@
 
 Мод добавляет в Redux-Redux полноценный сетевой кооператив: всю сюжетную кампанию можно пройти вдвоём, втроём или вчетвером.
 
+### Что нового в 2.2.2
+
+- Исправлено: после смерти или подъёма клиент не мог ходить.
+- Исправлено: у клиента после смерти/рестарта сбрасывалась или менялась маска.
+- Исправлено: клиент не получал клюшку после добивания босса-Байкера и часто не мог поднять её с пола (скин BIKER по-прежнему не берёт чужое оружие — это правило персонажа).
+- Совместима с 2.2 / 2.2.1 (тот же протокол). Подробнее — в [CHANGELOG.md](CHANGELOG.md).
+
 ### ✨ Возможности
 
 | | |
@@ -120,6 +127,13 @@
 ## 🇬🇧 English
 
 This mod adds full online co-op to Redux-Redux: play the whole story campaign with 2, 3 or 4 players.
+
+### What's new in 2.2.2
+
+- Fixed: client could not walk after death or revive.
+- Fixed: client's mask reset or changed after death / level restart.
+- Fixed: client did not get the Biker boss club and often could not pick it up from the floor (BIKER skin still does not pick up other weapons — by design).
+- Compatible with 2.2 / 2.2.1 (same protocol). Details in [CHANGELOG.md](CHANGELOG.md).
 
 ### ✨ Features
 
