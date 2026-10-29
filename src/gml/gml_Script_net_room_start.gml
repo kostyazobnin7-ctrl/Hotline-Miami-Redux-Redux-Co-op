@@ -80,12 +80,14 @@ for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
     global.pe_exec[i] = -4;
 }
 global.ent_next = 1;
-if (global.net_mode == global.NET_MODE_HOST)
+if (global.net_mode == global.NET_MODE_HOST && global.ps_iframes[1] > 0)
 {
-    if (global.ps_iframes[1] > 0)
-    {
-        global.god = global.ps_god_saved;
-    }
+    global.god = global.ps_god_saved;
+}
+// v2.2.2 / bug2: и хост, и клиент сразу ALIVE после смены/рестарта комнаты
+// (раньше клиент ждал SNAP/SPEC и мог залипнуть в DEAD + spectator).
+if (global.net_started && (global.net_mode == global.NET_MODE_HOST || global.net_mode == global.NET_MODE_CLIENT))
+{
     for (var i = 1; i <= global.NET_MAX_PLAYERS; i += 1)
     {
         global.ps_state[i] = global.NET_PS_ALIVE;
@@ -95,7 +97,11 @@ if (global.net_mode == global.NET_MODE_HOST)
         global.ps_iframes[i] = 0;
         global.ps_body[i] = -4;
         global.ps_cause[i] = 0;
+        global.pin_debt[i] = 0;
     }
+}
+if (global.net_mode == global.NET_MODE_HOST)
+{
     global.net_restart_ticks = -1;
     for (var kn = 0; kn <= global.NET_MAX_PLAYERS; kn += 1)
     {

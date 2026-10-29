@@ -44,7 +44,37 @@ for (var i = 2; i <= global.NET_MAX_PLAYERS; i += 1)
     {
         continue;
     }
-    // v1.4: сначала сюжетный предмет (кейс, телефон...), иначе — оружие
+    // v2.2.2 / bug1: если в радиусе есть objWeapon — сначала оружие, иначе сюжет/special
+    // съедает pin_pick у арены босса (GoToCar, двери) и клюшка с пола не берётся.
+    var ax = a.x;
+    var ay = a.y;
+    var near_wpn = 0;
+    with (objWeapon)
+    {
+        if (point_distance(x, y, ax, ay) < global.NET_PICK_RADIUS)
+        {
+            near_wpn = 1;
+        }
+    }
+    if (near_wpn)
+    {
+        if (net_biker(i))
+        {
+            // скин Байкера: оружие с пола не берёт — special/сюжет, иначе нож
+            if (net_pickup_special(a.x, a.y, a.dir, i) || net_story_try(a.x, a.y, a.dir, i))
+            {
+                continue;
+            }
+            net_biker_throw(a, i);
+            continue;
+        }
+        with (a)
+        {
+            net_avatar_pickup();
+        }
+        continue;
+    }
+    // v1.4: сначала сюжетный предмет (кейс, телефон...), иначе — оружие / нож Байкера
     if (net_pickup_special(a.x, a.y, a.dir, i) || net_story_try(a.x, a.y, a.dir, i))
     {
         continue;

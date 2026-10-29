@@ -277,3 +277,12 @@ STAGE CLEAR у клиента); диалог туториала у клиент�
   ent_map только objCoopEntity, иначе создаёт призрак заново.
 - Осторожно: objPJacketKillBeer / objPJacketKillNinjaStar / objPBikerKill есть в коде, но объектов
   с такими именами в data.win нет — в GML такое имя молча становится переменной и роняет игру.
+
+## v2.2.2 (протокол 24, совместима с 2.2 / 2.2.1)
+
+- Смерть/подъём клиента: net_on_pevent сразу ставит DOWNED/DEAD/ALIVE; net_room_start у клиента
+  тоже сбрасывает в ALIVE; cam_update / revive снимают spec_active (иначе prediction и WASD молчали).
+- Маски клиента: подтверждение из global.maskindex (не dummy); меню после рестарта с pl_mask;
+  FLOW свою маску не затирает.
+- Клюшка босса-Байкера: net_boss_club_equip после objPClubBoss2 → pw_wpn=2 у клиента; в
+  net_wpn_update оружие в радиусе важнее special/story. Скин BIKER оружие по-прежнему не берёт.

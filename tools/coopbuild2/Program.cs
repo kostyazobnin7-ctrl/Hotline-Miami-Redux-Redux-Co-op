@@ -158,7 +158,9 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     Must("gml_Object_objBoss2Crawl_Step_0",
         "if (point_distance(x, y, net_tgt_x(), net_tgt_y()) < 14)",
         "if (net_tgt_is_host() && point_distance(x, y, net_tgt_x(), net_tgt_y()) < 14)");
-    // после добивания — клюшка на полу для всех
+    // после добивания — экипировать клюшку исполнителю (клиентский pw_wpn) + клюшка на полу
+    Must("gml_Object_objPClubBoss2_Step_0", "my_id.sprite_index = sprPWalkClub;",
+        "my_id.sprite_index = sprPWalkClub;\n    net_boss_club_equip(my_id);");
     Must("gml_Object_objPClubBoss2_Step_0", "instance_create(x, y, objGoToCar);",
         "instance_create(x, y, objGoToCar);\n    net_boss_drop_club(x, y);");
     // пантеры: укус клиента — через кооп-обработку (раньше погибал хост, пантера исчезала)
@@ -168,7 +170,7 @@ finalText["gml_Script_scrGetMessage"] = "if (net_msg_hook(argument0)) exit;\n" +
     if (nb == 0) throw new Exception("objPanther: укус не найден");
     finalText["gml_Object_objPanther_Step_0"] = rxBite.Replace(pt,
         "if (!net_panther_bite())\n{\n    scrPlayerDiePantherBite();\n    instance_destroy();\n}");
-    Console.WriteLine($"  боссы: Байкер 5 правок, пантеры {nb} укуса");
+    Console.WriteLine($"  боссы: Байкер 6 правок, пантеры {nb} укуса");
 }
 
 // --- 11. v1.7: скин Байкера у хоста, настройка выбора маски при перезапуске ---

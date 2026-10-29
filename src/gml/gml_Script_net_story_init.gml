@@ -42,6 +42,7 @@ for (var mi = 0; mi <= global.NET_MAX_PLAYERS; mi += 1)
 }
 global.net_mask_pick = 0;
 global.net_mask_menu_was = 0;
+global.net_mask_confirmed = 0; // v2.2.2 / bug3: своя маска подтверждена меню (не из FLOW)
 global.ST_LC = 3;      // надпись «CHAPTER CLEAR» (objLevelComplete): x, y
 global.st_lc_allow = 0;
 global.ST_PICK = 4;     // v1.6: особый подбор (маска с пола и т. п.): d, e = x, y; f = dir

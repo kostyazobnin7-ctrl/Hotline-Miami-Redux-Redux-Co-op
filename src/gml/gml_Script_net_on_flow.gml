@@ -63,11 +63,15 @@ if ((buffer_tell(b) + 4) <= argument1)
     {
         var mk = buffer_read(b, buffer_u8);
         var sk = buffer_read(b, buffer_u8);
-        if (i != global.net_my_pid || global.pl_mask[i] == 255)
+        // v2.2.2 / bug3: свою маску FLOW никогда не затирает — только локальное
+        // подтверждение меню (net_mask_client_step) / MASK. Раньше при pl_mask==255
+        // хост мог навязать 0/чужую до Enter.
+        if (i == global.net_my_pid)
         {
-            global.pl_mask[i] = mk;
-            global.pl_mskin[i] = sk;
+            continue;
         }
+        global.pl_mask[i] = mk;
+        global.pl_mskin[i] = sk;
     }
 }
 global.net_flow_have = 1;
