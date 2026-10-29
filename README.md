@@ -3,19 +3,34 @@
 >
 > 💜 **If you'd like to support the developers' work, subscribe on [Boosty](https://boosty.to/saldamen).** The subscription gives no in-game advantages at all, it's just support for the authors. Thank you, guys!
 
+<p align="center">
+  <img src="docs/banner.svg" alt="Hotline Miami Redux-Redux Co-op" width="100%">
+</p>
+
 <div align="center">
 
-<img src="docs/banner.svg" alt="Hotline Miami Redux-Redux Co-op" width="100%">
+**Сетевой кооператив до 4 игроков** для фанатского мода _Hotline Miami: Redux-Redux_<br>
+*Online co-op for up to 4 players* for the _Hotline Miami: Redux-Redux_ fan mod
 
-**Сетевой кооператив до 4 игроков для фанатского мода _Hotline Miami: Redux-Redux_**<br>
-*Online co-op for up to 4 players for the _Hotline Miami: Redux-Redux_ fan mod*
+<br>
 
-[![Release](https://img.shields.io/github/v/release/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op?style=for-the-badge&color=ff2f8f&label=версия%20%2F%20version)](../../releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op/total?style=for-the-badge&color=33c9ff&label=скачиваний%20%2F%20downloads)](../../releases)
+[![Release](https://img.shields.io/github/v/release/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op?style=for-the-badge&color=ff2f8f&label=версия%20%2F%20version)](https://github.com/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op/total?style=for-the-badge&color=33c9ff&label=скачиваний%20%2F%20downloads)](https://github.com/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op/releases)
 ![Players](https://img.shields.io/badge/игроков%20%2F%20players-1–4-ffb02e?style=for-the-badge)
+![Protocol](https://img.shields.io/badge/протокол%20%2F%20protocol-24-33f0ff?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Windows-GameMaker%201.4-7a3cff?style=for-the-badge)
 
-### [⬇ Скачать кооп / Download co-op](../../releases/latest) · [🎮 Скачать игру / Get the game](https://boosty.to/skide/posts/3ea5910c-28e8-4e7e-8f13-cef3e44840f1) · [📜 Изменения / Changelog](CHANGELOG.md)
+<br>
+
+**[⬇ Скачать кооп / Download co-op](https://github.com/kostyazobnin7-ctrl/Hotline-Miami-Redux-Redux-Co-op/releases/latest)**
+&nbsp;·&nbsp;
+[🎮 Скачать игру / Get the game](https://boosty.to/skide/posts/3ea5910c-28e8-4e7e-8f13-cef3e44840f1)
+&nbsp;·&nbsp;
+[📜 Изменения / Changelog](CHANGELOG.md)
+&nbsp;·&nbsp;
+[💜 Boosty](https://boosty.to/saldamen)
+
+<br>
 
 [Русский](#-русский) · [English](#-english)
 
@@ -29,10 +44,14 @@
 
 ### Что нового в 2.2.2
 
-- Исправлено: после смерти или подъёма клиент не мог ходить.
-- Исправлено: у клиента после смерти/рестарта сбрасывалась или менялась маска.
-- Исправлено: клиент не получал клюшку после добивания босса-Байкера и часто не мог поднять её с пола (скин BIKER по-прежнему не берёт чужое оружие — это правило персонажа).
-- Совместима с 2.2 / 2.2.1 (тот же протокол). Подробнее — в [CHANGELOG.md](CHANGELOG.md).
+> [!NOTE]
+> **Патч 2.2.2** — три фикса для клиентов. Протокол тот же (24), совместим с 2.2 / 2.2.1. Лучше обновитесь все. Полный список — в [CHANGELOG.md](CHANGELOG.md).
+
+| | Исправление |
+|---|---|
+| 🚶 **Ходьба после смерти** | После смерти или подъёма клиент снова может ходить. |
+| 🐔 **Маски** | Маска клиента больше не сбрасывается и не меняется после смерти / рестарта уровня. |
+| 🏒 **Клюшка Байкера** | Клиент получает клюшку после добивания босса-Байкера и может поднять её с пола. Скин **BIKER** по-прежнему не берёт чужое оружие — это правило персонажа. |
 
 ### ✨ Возможности
 
@@ -130,10 +149,14 @@ This mod adds full online co-op to Redux-Redux: play the whole story campaign wi
 
 ### What's new in 2.2.2
 
-- Fixed: client could not walk after death or revive.
-- Fixed: client's mask reset or changed after death / level restart.
-- Fixed: client did not get the Biker boss club and often could not pick it up from the floor (BIKER skin still does not pick up other weapons — by design).
-- Compatible with 2.2 / 2.2.1 (same protocol). Details in [CHANGELOG.md](CHANGELOG.md).
+> [!NOTE]
+> **Patch 2.2.2** — three client fixes. Same protocol (24), compatible with 2.2 / 2.2.1. Everyone should update. Full list in [CHANGELOG.md](CHANGELOG.md).
+
+| | Fix |
+|---|---|
+| 🚶 **Walk after death** | Client can walk again after death or revive. |
+| 🐔 **Masks** | Client mask no longer resets or changes after death / level restart. |
+| 🏒 **Biker club** | Client gets the club after finishing the Biker boss and can pick it up from the floor. **BIKER** skin still does not pick up other weapons — by design. |
 
 ### ✨ Features
 
